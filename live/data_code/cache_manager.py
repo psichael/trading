@@ -104,10 +104,15 @@ class DataCacheManager:
             master_df = master_df.sort_index().ffill().tail(30000)
             master_df.to_csv(self.history_file)
 
-        print(f"📊 [PHYSICS] Deriving Daily Context (f_d)...")
+        print(f"📊 [PHYSICS] Deriving Daily Context (f_d) - Aligned with Simulation Formula...")
         daily_prices = master_df.resample('D').last().dropna(how='all')
-        daily_returns = np.log(daily_prices / daily_prices.shift(1))
-        daily_flux = daily_returns.rolling(window=20).std().stack().reset_index()
+        
+        # Aligned with simulation/data_code/data_processor.py math
+        daily_returns = daily_prices.pct_change()
+        v_d1 = daily_returns.rolling(24).std() * 100 * np.sqrt(252)
+        f_d = (v_d1 / 2.0) * 4.2525
+        
+        daily_flux = f_d.fillna(0).stack().reset_index()
         daily_flux.columns = ['date', 'ticker', 'f_d']
         self.daily_master = daily_flux.set_index(['ticker', 'date']).sort_index()
         
@@ -118,7 +123,6 @@ class DataCacheManager:
         results = {}
         crypto_list = [t for t in self.assets if any(x in t.lower() for x in ['usd', 'btc', 'sol', 'doge', 'ada', 'dot', 'avax'])]
         if crypto_list:
-            # Tiingo restricts crypto batches to 5 tickers maximum.
             for i in range(0, len(crypto_list), 5):
                 chunk = crypto_list[i:i+5]
                 url = f"https://api.tiingo.com/tiingo/crypto/prices?tickers={','.join(chunk)}&token={self.token}"

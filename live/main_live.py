@@ -15,6 +15,7 @@ from live.core.portfolio_manager import PortfolioManager
 from live.data_code.cache_manager import DataCacheManager
 from live.execution.broker_sim import SimBroker
 from live.execution.broker_ibkr import IBKRBroker
+from live.core.math_utils import get_friction
 
 # === CONFIG ===
 TIINGO_TOKEN = '1e1b9c4ef14bdc6ad07d14b6d5d8563c447ecbe3' 
@@ -31,7 +32,6 @@ ASSETS = [
 is_shutting_down = False
 
 def handle_exit(sig, frame):
-    """Ensures IBKR connection is torn down cleanly on Ctrl+C."""
     global is_shutting_down
     is_shutting_down = True
     print("\n[SYSTEM] Shutdown signal received. Disconnecting...")
@@ -40,7 +40,6 @@ def handle_exit(sig, frame):
 signal.signal(signal.SIGINT, handle_exit)
 
 def is_equity_open(dt_naive):
-    """Checks if a local naive datetime corresponds to active US Equity Market hours."""
     try:
         local_tz = datetime.now().astimezone().tzinfo
         aware_dt = dt_naive.replace(tzinfo=local_tz)
@@ -115,9 +114,9 @@ async def run_unified_engine():
         if not portfolio.golden_list or (current_week % 13 == 0 and current_week != last_quarter_week):
             portfolio.rebuild_golden_list(current_time, cache.daily_master)
             last_quarter_week = current_week
-        if not portfolio.active_roster or current_week != last_draft_week:
+        if not portfolio.active_roster or current_week != last_week:
             portfolio.rebuild_active_roster(current_time, cache.daily_master)
-            last_draft_week = current_week
+            last_week = current_week
 
         is_h1_close = current_time.hour != last_h1_hour
         if is_h1_close: last_h1_hour = current_time.hour
@@ -126,9 +125,6 @@ async def run_unified_engine():
             price = row[ticker]
             if not pd.isna(price):
                 is_crypto = 'usd' in ticker.lower()
-                
-                # --- DATA INGESTION GUARD ---
-                # Freeze physics for sleeping equities to prevent volatility decay
                 if not is_crypto and not market_open_now:
                     pass
                 else:
@@ -139,61 +135,61 @@ async def run_unified_engine():
 
         held_tickers = sim_broker.get_holdings()
         active_roster = portfolio.active_roster
-        
-        for ticker in active_roster:
-            if ticker in row and not pd.isna(row[ticker]):
-                log_telemetry(telemetry_file, current_time, ticker, row[ticker], forges[ticker].get_signal(), forges[ticker])
+        recently_overridden = set()
 
+        # Simulation Exit Logic (Aliged with Best Candidate Logic)
         for ticker in list(held_tickers):
             is_roster_drop = ticker not in active_roster
-            force_exit = False if is_roster_drop else portfolio.check_exit_condition(ticker, held_tickers, forges)
+            sig = forges[ticker].get_signal()
+            current_flux = forges[ticker].state.get('H1_Flux', 0)
+            force_exit = False
             
-            if is_roster_drop or force_exit:
+            if is_roster_drop:
+                force_exit = True
+                reason = "Roster Drop"
+            elif sig == 'WAIT':
+                force_exit = True
+                reason = "Signal WAIT"
+            else:
+                # Check for 1.5x Override like simulation/main_sim.py
+                cands = [c for c in active_roster if forges[c].get_signal() == 'LONG' and c != ticker and c not in held_tickers]
+                if cands:
+                    best_alt = max(cands, key=lambda x: forges[x].state.get('H1_Flux', 0) * (1 - (get_friction(x) * 10)))
+                    best_flux = forges[best_alt].state.get('H1_Flux', 0)
+                    dynamic_hurdle = 1.5 + (get_friction(best_alt) * 100)
+                    if best_flux > (current_flux * dynamic_hurdle):
+                        force_exit = True
+                        reason = "1.5x Override"
+                        recently_overridden.add(ticker)
+
+            if force_exit:
                 price = row.get(ticker, 0)
                 if await sim_broker.execute(ticker, 'SELL', price):
                     held_tickers.remove(ticker)
-                    
-                    if is_roster_drop:
-                        reason = "Roster Drop"
-                    elif forges[ticker].get_signal() == 'WAIT':
-                        reason = "Signal WAIT"
-                    else:
-                        reason = "1.5x Override"
-                        
                     entry_p = sim_entry_prices.get(ticker, price)
                     pnl_pct = ((price - entry_p) / entry_p * 100) if entry_p > 0 else 0.0
-                    
-                    state = forges[ticker].state
-                    flux = state.get('H1_Flux', 0)
-                    
-                    print(f"    [SIM SELL] {ticker:<5} | PnL: {pnl_pct:>+6.2f}% | Reason: {reason:<14} | Exit Flux: {flux:.2f}")
+                    print(f"    [SIM SELL] {ticker:<5} | PnL: {pnl_pct:>+6.2f}% | Reason: {reason:<14} | Exit Flux: {forges[ticker].state.get('H1_Flux', 0):.2f}")
 
-        for ticker in active_roster:
-            if ticker not in held_tickers and len(held_tickers) < MAX_SLOTS:
-                if forges[ticker].get_signal() == 'LONG' and not pd.isna(row.get(ticker)):
-                    price = row[ticker]
-                    if await sim_broker.execute(ticker, 'BUY', price):
-                        held_tickers.append(ticker)
-                        sim_entry_prices[ticker] = price
-                        
-                        state = forges[ticker].state
-                        flux = state.get('H1_Flux', 0)
-                        ceil = state.get('Ceiling', 0)
-                        rds = state.get('M5_Rds', 0)
-                        tilt = state.get('H1_Tilt', 0)
-                        
-                        print(f"    [SIM BUY]  {ticker:<5} | Flux: {flux:>5.2f}/{ceil:<5.2f} | Rds: {rds:.4f} | Tilt: {tilt:.4f}")
+        # Simulation Entry Logic (Best Candidate Selection Aligned with main_sim.py)
+        if len(held_tickers) < MAX_SLOTS:
+            # Filter out assets that were just overridden to prevent churn loop
+            cands = [t for t in active_roster if forges[t].get_signal() == 'LONG' and t not in held_tickers and t not in recently_overridden]
+            if cands:
+                best_asset = max(cands, key=lambda x: forges[x].state.get('H1_Flux', 0) * (1 - (get_friction(x) * 10)))
+                price = row.get(best_asset)
+                if pd.notna(price) and price > 0:
+                    if await sim_broker.execute(best_asset, 'BUY', price):
+                        held_tickers.append(best_asset)
+                        sim_entry_prices[best_asset] = price
+                        state = forges[best_asset].state
+                        print(f"    [SIM BUY]  {best_asset:<5} | Flux: {state.get('H1_Flux', 0):>5.2f}/{state.get('Ceiling', 0):<5.2f} | Rds: {state.get('M5_Rds', 0):.4f}")
                     
     sim_broker.print_results(m5_timeline.iloc[-1])
     
     print("\n[PHASE 3] Live Execution Armed.")
-    
     live_broker = IBKRBroker(MAX_SLOTS, ALLOCATION_PER_SLOT)
     connected = await connect_with_retry(live_broker, host='127.0.0.1', port=4002)
-    
-    if not connected:
-        print("❌ [FATAL] IBKR Connect Failed after 10 attempts. Exiting.")
-        return
+    if not connected: return
         
     try:
         while not is_shutting_down:
@@ -201,7 +197,6 @@ async def run_unified_engine():
             sleep_seconds = (300 - (now.minute % 5) * 60 - now.second) + 15
             print(f"\n[LIVE] Next Tick in {sleep_seconds}s...")
             await asyncio.sleep(max(sleep_seconds, 5))
-            
             if is_shutting_down: break
             
             current_time = datetime.now()
@@ -214,6 +209,8 @@ async def run_unified_engine():
 
             held_tickers = live_broker.get_holdings()
             active_roster = portfolio.active_roster
+            recently_overridden = set()
+            
             print(f"\n=== ⚡ LIVE TICK: {current_time.strftime('%H:%M:%S')} ===")
             print(f"📦 Holdings: {held_tickers if held_tickers else 'NONE'} | 🎯 Roster: {active_roster}")
 
@@ -222,63 +219,43 @@ async def run_unified_engine():
             
             for ticker, price in current_prices.items():
                 is_crypto = 'usd' in ticker.lower()
-                
-                # --- DATA INGESTION GUARD ---
-                # Freeze physics for sleeping equities to prevent volatility decay
-                if not is_crypto and not market_open_now:
-                    pass
-                else:
+                if not (not is_crypto and not market_open_now):
                     if is_h1_close: forges[ticker].ingest_h1(price)
                     forges[ticker].ingest_m5(price)
                     
                 if ticker in portfolio.active_roster:
                     log_telemetry(telemetry_file, current_time, ticker, price, forges[ticker].get_signal(), forges[ticker])
 
-            current_week = current_time.isocalendar()[1]
-            if current_week % 13 == 0 and current_week != last_quarter_week:
-                print(f"\n[LIVE] Triggering Quarterly Golden List Rebuild...")
-                portfolio.rebuild_golden_list(current_time, cache.daily_master)
-                last_quarter_week = current_week
-                
-            if current_week != last_draft_week:
-                print(f"\n[LIVE] Triggering Weekly Active Roster Draft...")
-                portfolio.rebuild_active_roster(current_time, cache.daily_master)
-                last_draft_week = current_week
+            # --- LIVE EXITS (Best Candidate Sync) ---
+            for ticker in list(held_tickers):
+                if ticker not in active_roster or portfolio.check_exit_condition(ticker, held_tickers, forges):
+                    price = current_prices.get(ticker, 0)
+                    if price > 0:
+                        # Track if this was an override swap to prevent churn loop
+                        if ticker in active_roster and forges[ticker].get_signal() != 'WAIT':
+                            recently_overridden.add(ticker)
+                            
+                        print(f"[LIVE] Exit condition met for {ticker}. Executing SELL.")
+                        success = await live_broker.execute(ticker, 'SELL', price)
+                        if success: held_tickers.remove(ticker)
 
-            try:
-                for ticker in list(held_tickers):
-                    if ticker not in active_roster or portfolio.check_exit_condition(ticker, held_tickers, forges):
-                        price = current_prices.get(ticker, 0)
-                        if price > 0:
-                            print(f"[LIVE] Exit condition met for {ticker}. Executing SELL.")
-                            success = await live_broker.execute(ticker, 'SELL', price)
-                            if success: held_tickers.remove(ticker)
+            # --- LIVE ENTRIES (Best Candidate Sync) ---
+            if len(held_tickers) < MAX_SLOTS:
+                cands = [t for t in active_roster if forges[t].get_signal() == 'LONG' and t not in held_tickers and t not in recently_overridden]
+                if cands:
+                    best_asset = max(cands, key=lambda x: forges[x].state.get('H1_Flux', 0) * (1 - (get_friction(x) * 10)))
+                    price = current_prices.get(best_asset, 0)
+                    if price > 0:
+                        print(f"[LIVE] Entry condition met for {best_asset} (Best Candidate: LONG). Executing BUY.")
+                        success = await live_broker.execute(best_asset, 'BUY', price)
+                        if success: held_tickers.append(best_asset)
 
-                for ticker in active_roster:
-                    if ticker not in held_tickers and len(held_tickers) < MAX_SLOTS:
-                        signal = forges[ticker].get_signal()
-                        price = current_prices.get(ticker, 0)
-                        
-                        if signal == 'LONG' and price > 0:
-                            print(f"[LIVE] Entry condition met for {ticker} (LONG). Executing BUY.")
-                            success = await live_broker.execute(ticker, 'BUY', price)
-                            if success: held_tickers.append(ticker)
-            except Exception as execution_error:
-                print(f"❌ [LIVE EXECUTION ERROR] {execution_error}")
-
-    except asyncio.CancelledError:
-        pass
-    except Exception as e:
-        print(f"\n❌ [RUNTIME ERROR] {e}")
+    except Exception as e: print(f"\n❌ [RUNTIME ERROR] {e}")
     finally:
         print("\n[SYSTEM] Tearing down IBKR connection...")
-        if hasattr(live_broker, 'ib') and live_broker.ib.isConnected():
-            live_broker.ib.disconnect()
+        if hasattr(live_broker, 'ib') and live_broker.ib.isConnected(): live_broker.ib.disconnect()
 
 if __name__ == '__main__':
-    if sys.platform == 'win32':
-        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    try: 
-        asyncio.run(run_unified_engine())
-    except KeyboardInterrupt: 
-        pass
+    if sys.platform == 'win32': asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    try: asyncio.run(run_unified_engine())
+    except KeyboardInterrupt: pass
