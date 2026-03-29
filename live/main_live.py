@@ -19,7 +19,7 @@ from live.execution.broker_ibkr import IBKRBroker
 # === CONFIG ===
 TIINGO_TOKEN = '1e1b9c4ef14bdc6ad07d14b6d5d8563c447ecbe3' 
 VIRTUAL_CAPITAL_USD = 3250.00
-MAX_SLOTS = 5
+MAX_SLOTS = 1
 ALLOCATION_PER_SLOT = VIRTUAL_CAPITAL_USD / MAX_SLOTS
 ASSETS = [
     'NVDA', 'MSFT', 'AVGO', 'AAPL', 'AMZN', 'MSTR', 'COIN', 'PLTR', 'CRWD', 'TSLA', 
@@ -80,7 +80,7 @@ async def run_unified_engine():
     print("\n=== INITIALIZING UNIFIED GATED FORGE ORCHESTRATOR ===")
     
     cache = DataCacheManager(ASSETS, TIINGO_TOKEN)
-    portfolio = PortfolioManager(ASSETS, MAX_SLOTS)
+    portfolio = PortfolioManager(ASSETS, active_roster_size=5)
     forges = {ticker: LiveGatedForge(ticker) for ticker in ASSETS}
     
     telemetry_file = os.path.join(cache.data_dir, 'telemetry.csv')

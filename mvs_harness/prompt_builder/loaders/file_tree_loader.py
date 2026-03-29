@@ -11,7 +11,7 @@ def generate_file_tree(root_dir: Path = Path('.')) -> str:
     intelligently sorting SDF-structured items.
     """
     tree_lines = []
-    ignore_patterns = {'.git', '__pycache__', '.vscode', '.idea', '.ddio', 'poetry.lock', '.pytest_cache'}
+    ignore_patterns = {'.git', '__pycache__', '.vscode', '.idea', '.ddio', 'poetry.lock', '.pytest_cache', 'data'}
     
     def walk(current_path: Path, prefix: str = ''):
         try:

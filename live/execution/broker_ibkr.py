@@ -75,7 +75,7 @@ class IBKRBroker:
                 return False
                 
             usable_capital = self.allocation_per_slot * (1 - fric)
-            shares = int(usable_capital / price)
+            shares = round(usable_capital / price, 4)
             
             if shares > 0:
                 # Add 0.5% buffer to Tiingo price to guarantee execution
@@ -88,13 +88,12 @@ class IBKRBroker:
                 await asyncio.sleep(1)
                 return True
             else:
-                print(f"[{ticker}] LIVE BUY SKIPPED: Capital (${usable_capital:.2f}) insufficient for 1 share @ ${price:.2f}")
+                print(f"[{ticker}] LIVE BUY SKIPPED: Capital (${usable_capital:.2f}) insufficient.")
                 return False
                 
         elif action == 'SELL':
             positions = self.ib.positions()
-            # Wrap in int() to strictly prevent fractional share routing errors
-            shares_owned = int(sum(p.position for p in positions if p.contract.symbol == contract.symbol))
+            shares_owned = round(sum(p.position for p in positions if p.contract.symbol == contract.symbol), 4)
             
             if shares_owned > 0:
                 # Subtract 0.5% buffer to Tiingo price to guarantee execution

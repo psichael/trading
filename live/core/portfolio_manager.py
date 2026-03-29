@@ -2,9 +2,9 @@ import pandas as pd
 from live.core.math_utils import get_friction, get_regime
 
 class PortfolioManager:
-    def __init__(self, assets, max_slots):
+    def __init__(self, assets, active_roster_size=5):
         self.assets = assets
-        self.max_slots = max_slots
+        self.active_roster_size = active_roster_size
         self.golden_list = []
         self.active_roster = []
         
@@ -67,7 +67,7 @@ class PortfolioManager:
     def rebuild_active_roster(self, current_time, daily_master):
         """
         MESO FILTER: Runs Weekly.
-        Drafts the Top 5 from the Golden List based on the immediate f_d score.
+        Drafts the Top candidates from the Golden List based on the immediate f_d score.
         Applies a 1.15x modifier to incumbent assets to prevent whiplash.
         """
         if not self.golden_list:
@@ -95,7 +95,7 @@ class PortfolioManager:
                 
             scores[t] = score
             
-        self.active_roster = sorted(scores.keys(), key=lambda x: scores[x], reverse=True)[:self.max_slots]
+        self.active_roster = sorted(scores.keys(), key=lambda x: scores[x], reverse=True)[:self.active_roster_size]
         print(f"[PORTFOLIO LOCK] Active Targets: {self.active_roster}")
 
     def check_exit_condition(self, ticker, held_tickers, forges):

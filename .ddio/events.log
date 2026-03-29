@@ -295,3 +295,4 @@
 {"timestamp": "2026-03-21T12:32:38.728887Z", "event_type": "feat", "summary": "Adding full universe autodiscovery to the simulation CLI and engine."}
 {"timestamp": "2026-03-21T12:51:07.551643Z", "event_type": "fix", "summary": "Fixing the severed physics coupling in the get_tilt calculation to restore dynamic Manifold stability."}
 {"timestamp": "2026-03-29T09:22:16.980755Z", "event_type": "fix", "summary": "Re-applying the lookback parameter and tearsheet generator that were wiped during the Git reset."}
+{"timestamp": "2026-03-29T10:52:16.857830Z", "event_type": "feat", "summary": "Update live bot for fractional shares, single-slot compounding, and decoupled roster sizing."}

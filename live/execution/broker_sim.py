@@ -28,9 +28,13 @@ class SimBroker:
         """Executes the simulated trade with exact backtest friction applied."""
         fric = get_friction(ticker)
         
+        # Single-slot dynamic compounding allocation update
+        if self.max_slots == 1:
+            self.allocation_per_slot = self.cash
+            
         if action == 'BUY':
             usable_capital = self.allocation_per_slot * (1 - fric)
-            shares = int(usable_capital / price)
+            shares = round(usable_capital / price, 4)
             
             if shares > 0 and self.cash >= (shares * price):
                 self.positions[ticker] = shares

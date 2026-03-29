@@ -4,4 +4,4 @@ bot/data/kaggle_raw/
 *.zip
 bot/data/*.csv
 data/
-
+data/*

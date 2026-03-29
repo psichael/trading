@@ -17,7 +17,8 @@ def generate_file_tree(root_dir: Path = Path('.')) -> str:
         '.pytest_cache',
         '.venv',  # Exclude virtual environment
         '.ruff_cache', # Exclude ruff cache
-        'build' # Exclude build artifacts
+        'build' , # Exclude build artifacts
+        'data' # Exclude massive data directories\n
     }
     
     def walk(current_path: Path, prefix: str = ''):
