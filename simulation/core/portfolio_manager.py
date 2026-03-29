@@ -2,19 +2,19 @@ import pandas as pd
 from simulation.core.math_utils import get_friction, get_regime
 
 class PortfolioManager:
-    def __init__(self, assets, max_slots):
+    def __init__(self, assets, max_slots, lookback_days=30):
         self.assets = assets
         self.max_slots = max_slots
-        self.roster_size = 5  # Decoupled from max_slots
+        self.roster_size = 5
         self.golden_list = []
         self.active_roster = []
         self.draft_size = 30
         self.max_sector_weight = 0.15
         self.hedge_quota = 0.20
-        self.lookback_days = 30
+        self.lookback_days = lookback_days
 
     def rebuild_golden_list(self, current_time, daily_master):
-        print(f"\n[PORTFOLIO] {current_time.strftime('%Y-%m-%d')} - Rebuilding Quarterly Golden List...")
+        print(f"\n[PORTFOLIO] {current_time.strftime('%Y-%m-%d')} - Rebuilding Quarterly Golden List (Lookback: {self.lookback_days}d)...")
         screener_scores = {}
         screen_start = current_time - pd.DateOffset(days=self.lookback_days)
         
@@ -66,7 +66,6 @@ class PortfolioManager:
             if t in self.active_roster: score *= 1.15
             scores[t] = score
             
-        # FIX: Roster size is now strictly independent of max_slots
         self.active_roster = sorted(scores.keys(), key=lambda x: scores[x], reverse=True)[:self.roster_size]
         print(f"[PORTFOLIO LOCK] Active Targets: {self.active_roster}")
 
