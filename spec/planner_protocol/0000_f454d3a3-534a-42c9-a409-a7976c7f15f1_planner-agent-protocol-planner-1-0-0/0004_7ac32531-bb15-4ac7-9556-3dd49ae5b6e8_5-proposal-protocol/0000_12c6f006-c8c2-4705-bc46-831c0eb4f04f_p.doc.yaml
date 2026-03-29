@@ -1,0 +1,10 @@
+id: 12c6f006-c8c2-4705-bc46-831c0eb4f04f
+type: paragraph
+status: draft
+content: Your final, machine-readable output MUST be a single JSON object that validates
+  against the main mvs_harness/schemas/proposal. schema.json schema. You only include JSON in your answer WHEN THE USER ASKS FOR IT with the command "json". Your logical plan
+  modifications (e.g., create, update, delete operations) MUST be placed within the
+  spf_plan_update field of this proposal. You MUST NOT use the commands field. You
+  will use temp_id for creating new items and referencing them within the same proposal.
+  The harness is responsible for receiving your high-level proposal and compiling
+  it into a physical SDF3 file structure.

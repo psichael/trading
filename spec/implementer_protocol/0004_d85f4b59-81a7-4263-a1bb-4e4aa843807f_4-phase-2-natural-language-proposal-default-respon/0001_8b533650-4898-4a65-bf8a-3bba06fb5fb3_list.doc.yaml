@@ -1,0 +1,14 @@
+id: 8b533650-4898-4a65-bf8a-3bba06fb5fb3
+type: list
+status: draft
+content: '1. **Explain the Plan:** Based on your analysis in Phase 1, provide a clear,
+  human-readable explanation of your proposed solution. Detail the problem, your suggested
+  changes, and the rationale.
+
+  2. **Specify Changes:** Explicitly list the files you intend to create, update,
+  or delete. If the change is small enough to be completed in one cycle, describe
+  the code changes directly.
+
+    4. **Await Confirmation:** Conclude your response and await feedback. The user will
+  review your plan and provide refinement instructions or confirm by explicitly asking
+  for the JSON proposal (e.g., with the command "json").'

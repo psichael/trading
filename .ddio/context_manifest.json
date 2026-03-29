@@ -1,0 +1,4 @@
+{
+  "active_task": "plan/0000_d6516154-9144-48bb-8365-8c26dc558567_project-initialization/0000_a1ba2ec0-300c-4820-a16f-4e6c48b2bae1_await-user-instructions.doc.yaml",
+  "task_content": "The agent must pause and wait for specific instructions and additional context files from the user before proceeding with any implementation work."
+}

@@ -1,0 +1,13 @@
+id: 53bc6de6-db9c-4d30-ae3c-8d02a45d3cef
+type: code
+status: draft
+content: "```\nid: topic-unique-uuid             # Required. The primary key for this\
+  \ topic.\ntitle: Human-Readable Title        # Required.\nversion: \"1.0\"     \
+  \                # Optional. Semantic version of this topic section.\nstatus: finalized\
+  \                  # Required. Lifecycle status of the topic.\nowner: architect-agent@1.0\
+  \         # Optional. The primary responsible agent/role.\nabstract: |         \
+  \               # Required. A high-level summary of the topic's intent.\n  This\
+  \ section details...\ntags: [high-level, concept]        # Optional. Topic-level\
+  \ keywords.\nrelations:                         # Optional. High-level links to\
+  \ OTHER topics by UUID.\n  - type: depends_on\n    topic_id: other-topic-uuid\n\
+  ```"

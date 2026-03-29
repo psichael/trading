@@ -1,0 +1,5 @@
+id: f9e8d7c6-5b4a-3c2d-1e0f-a9b8c7d6e5f4
+type: paragraph
+status: finalized
+content: |
+  The Orchestrator AI's primary responsibility is to act as a stateless, analytical engine. It receives the complete project state, analyzes the active task, and determines the exact context required for the Agent AI to perform the work. It **must not** guess file contents or perform the work itself. Its sole output is a precise work order.

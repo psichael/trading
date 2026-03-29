@@ -1,0 +1,12 @@
+id: 591d2340-9743-4cac-90a7-dcfbb5a5e198
+type: code
+status: draft
+content: "```\nid: epic-unique-identifier        # Required. A stable, unique ID for\
+  \ the epic.\ntitle: Human-Readable Epic Title   # Required.\nstatus: in-progress\
+  \                # Required. The lifecycle status of the epic.\n               \
+  \                    # e.g., 'pending', 'in-progress', 'completed', 'blocked'.\n\
+  owner: agent-role@1.0              # Optional. The primary responsible role.\nabstract:\
+  \ |                        # Required. A high-level summary of the epic's goal.\n\
+  \  This epic covers the work to...\nrelations:                         # Optional.\
+  \ Defines dependencies on OTHER epics.\n  - type: depends_on\n    topic_id: another-epic-id\n\
+  ```"

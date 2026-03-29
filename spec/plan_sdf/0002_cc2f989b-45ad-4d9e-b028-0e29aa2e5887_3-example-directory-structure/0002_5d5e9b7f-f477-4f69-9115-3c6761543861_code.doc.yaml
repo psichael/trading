@@ -1,0 +1,9 @@
+id: 5d5e9b7f-f477-4f69-9115-3c6761543861
+type: code
+status: draft
+content: "```\nplan/\n\u2514\u2500\u2500 0000_e22a_mvs2-sdf-unification/    # Epic\
+  \ Directory\n    \u251C\u2500\u2500 _topic.manifest.yaml            # Epic Manifest\
+  \ (id: mvs2-sdf-unification)\n    |\n    \u251C\u2500\u2500 0000_t4f1_define-plan.doc.yaml\
+  \  # Task 1 (id: define-plan-sdf)\n    |\n    \u251C\u2500\u2500 t4f1_t8b3_update-harness.doc.yaml\
+  \ # Task 2 (id: update-harness-read-sdf)\n    |\n    \u2514\u2500\u2500 t8b3_tc9e_migrate-plan.doc.yaml\
+  \   # Task 3 (id: migrate-plan-to-sdf)\n```"

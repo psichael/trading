@@ -1,0 +1,6 @@
+id: 7106858e-c048-4fca-ad48-61c37eb8b26d
+type: paragraph
+status: draft
+content: Every directory must contain a `_topic.manifest.yaml` file. This file serves
+  as the authoritative, machine-readable summary and governance document for its entire
+  topic branch, acting as the primary entry point for an agent assessing context.

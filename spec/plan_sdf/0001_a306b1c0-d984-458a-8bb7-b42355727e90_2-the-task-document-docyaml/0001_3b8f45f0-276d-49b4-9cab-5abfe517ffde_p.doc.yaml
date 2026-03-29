@@ -1,0 +1,5 @@
+id: 3b8f45f0-276d-49b4-9cab-5abfe517ffde
+type: paragraph
+status: draft
+content: A task is the smallest unit of work, represented by a `.doc.yaml` file. It
+  follows the SDF atomic unit schema with specific conventions for planning.

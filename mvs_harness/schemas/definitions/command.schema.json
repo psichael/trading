@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Command",
+    "description": "A single, atomic file system operation.",
+    "type": "object",
+    "properties": {
+        "command": {
+            "description": "The type of operation to perform.",
+            "type": "string",
+            "enum": [
+                "create_file",
+                "update_file",
+                "delete_file",
+                "move_file",
+                "create_directory",
+                "delete_directory",
+                "move_directory"
+            ]
+        },
+        "path": {
+            "description": "The primary file or directory path for the operation.",
+            "type": "string"
+        },
+        "new_path": {
+            "description": "The destination path for a 'move_file' or 'move_directory' operation.",
+            "type": "string"
+        },
+        "content": {
+            "description": "The full file content for 'create_file' or 'update_file' operations.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "command",
+        "path"
+    ]
+}

@@ -1,0 +1,5 @@
+id: c5b9a1d0-3e2d-4f1a-b8c9-d0e1f2a3b4c5
+title: '1. Guiding Principle'
+status: finalized
+abstract: 'Defines the core operational principle of the Orchestrator as a stateless, context-first analytical engine.'
+tags: [principle, architecture]

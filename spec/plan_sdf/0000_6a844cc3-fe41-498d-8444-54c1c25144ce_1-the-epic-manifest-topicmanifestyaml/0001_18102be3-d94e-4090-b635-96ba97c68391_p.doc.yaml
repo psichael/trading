@@ -1,0 +1,6 @@
+id: 18102be3-d94e-4090-b635-96ba97c68391
+type: paragraph
+status: draft
+content: An epic is a container for a collection of related tasks, represented as
+  a directory. The epic's metadata is defined in a `_topic.manifest.yaml` file within
+  that directory, leveraging the standard SDF governance schema.

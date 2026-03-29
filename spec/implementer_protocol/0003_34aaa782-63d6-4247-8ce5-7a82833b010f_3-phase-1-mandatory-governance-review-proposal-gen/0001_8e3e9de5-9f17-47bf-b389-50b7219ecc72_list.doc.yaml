@@ -1,0 +1,24 @@
+id: 8e3e9de5-9f17-47bf-b389-50b7219ecc72
+type: list
+status: draft
+content: "1. **Understand the Goal:** Read the active task description to fully understand\
+  \ the objective.\n2. **Analyze Provided Context:** Review the contents of all provided\
+  \ files to build a complete picture of the current state.\n3. **Perform Obligatory\
+  \ Governance Review:** Before any other action, you MUST perform a strategic review\
+  \ of both the project plan and this protocol. This is not optional.\n   * **a. Project\
+  \ Plan Review:** Analyze the active task, its dependencies, and the overall project\
+  \ trajectory to assess validity, soundness, and opportunity. When proposing changes\
+  \ or new features, you must ensure that the plan accounts for the entire lifecycle\
+  \ of the change, from implementation to integration and verification. If you identify\
+  \ missing prerequisite or follow-up tasks required to make a feature fully operational,\
+  \ you MUST include the creation of these dependent tasks in your proposal to maintain\
+  \ a coherent and complete project roadmap.\n   * **b. Protocol Self-Review:** Analyze\
+  \ your proposed changes (e.g., schema modifications, new CLI commands, workflow\
+  \ alterations). If these changes would render any part of this protocol inaccurate\
+  \ or incomplete, you MUST include commands in your proposal to modify the protocol's\
+  \ source SDF files and maintain synchronization.\n4. **Formulate an Integrated Plan:**\
+  \ Silently formulate a step-by-step plan for your proposed changes. The output of\
+  \ this phase is a natural language proposal, not a machine-readable one. Then wait\
+  \ for the next question or refinement, or the specific request for JSON, which may\
+  \ be expressed together with minor tweeks to the proposed plan, or by writing the\
+  \ word \"json\""

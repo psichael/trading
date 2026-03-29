@@ -1,0 +1,5 @@
+id: 1a7b8c9d-0e1f-4a3b-2c5d-6e8f7a9b0c1d
+type: paragraph
+status: draft
+content: For clarity, here is an example of a valid proposal that uses the `context_request`
+  field to ask the harness for a file's content before proceeding with a task.

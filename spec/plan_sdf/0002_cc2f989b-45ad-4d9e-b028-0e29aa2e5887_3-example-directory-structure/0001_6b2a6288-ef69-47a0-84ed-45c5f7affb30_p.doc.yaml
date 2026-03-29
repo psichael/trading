@@ -1,0 +1,5 @@
+id: 6b2a6288-ef69-47a0-84ed-45c5f7affb30
+type: paragraph
+status: draft
+content: This example shows how an epic with several sequential tasks would be represented
+  on the filesystem, following the SDF universal ordering convention (`[predecessor_id]_[my_id]_[name]`).

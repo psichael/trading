@@ -1,0 +1,9 @@
+id: c840e98f-fff9-4180-a4bf-3723651350ba
+type: code
+status: draft
+content: "```\nid: unique-semantic-uuid             # Required, immutable UUID. MUST\
+  \ be generated for new files.\ntype: paragraph                     # Required. e.g.,\
+  \ 'paragraph', 'code', 'list-item-bullet'.\nstatus: finalized                  \
+  \ # Required. e.g., 'draft', 'finalized', 'deprecated'.\ncontent: |            \
+  \              # Required. The single, atomic piece of content.\n  This is one idea.\n\
+  ```"

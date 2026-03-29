@@ -1,0 +1,5 @@
+id: 8ae5bae7-f06f-4d7a-8775-ed8fa2310f4b
+type: paragraph
+status: draft
+content: Defines the schema for an "epic," which corresponds to a directory in the
+  plan. The epic is governed by a standard SDF `_topic.manifest.yaml` file.

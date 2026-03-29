@@ -1,0 +1,15 @@
+id: a845d20b-41d8-49bc-87c1-ab60da0ebb3b
+type: list
+status: draft
+content: '- **`ddio docs assemble`**: Traverses the tree and renders fragments into
+  human-readable documents (e.g., Markdown) in a `build/` directory.
+
+  - **`ddio docs validate`**: The linter and governance tool. It enforces all rules
+  defined in Section 5.
+
+  - **`ddio docs diff`**: The Semantic Diff viewer. It uses UUIDs to track items,
+  providing a human-readable summary of logical changes (e.g., reporting `REORDERED`
+  instead of a raw file rename).
+
+  - **`ddio docs renumber [path]`**: A deterministic utility that scans a directory
+  for decimal indexes and renumbers all items into a clean, sequential series.'

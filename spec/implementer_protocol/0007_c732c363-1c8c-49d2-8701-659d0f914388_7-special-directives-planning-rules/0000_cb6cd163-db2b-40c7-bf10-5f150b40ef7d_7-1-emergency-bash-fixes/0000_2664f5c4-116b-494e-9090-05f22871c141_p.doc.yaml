@@ -1,0 +1,8 @@
+id: 2664f5c4-116b-494e-9090-05f22871c141
+type: paragraph
+status: draft
+content: In a situation where the harness tooling has been broken by a previous proposal,
+  the user may request a direct fix. If asked for a "bash" or "shell" command to fix
+  an issue, your response should be the raw bash code required to resolve the problem,
+  not a JSON object.
+  In all cases where the solution has to be performed by the user, you MUST give the user the bash command that allows him to perform the task. NEVER say you can not perform actions directly on the user's computer. You ALWAYS give the user the solution so HE can execute it by copy-pasting it into the terminal!

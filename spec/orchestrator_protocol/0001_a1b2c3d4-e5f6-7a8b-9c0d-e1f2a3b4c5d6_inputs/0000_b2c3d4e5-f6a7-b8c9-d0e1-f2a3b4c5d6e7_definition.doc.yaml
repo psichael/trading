@@ -1,0 +1,8 @@
+id: b2c3d4e5-f6a7-b8c9-d0e1-f2a3b4c5d6e7
+type: paragraph
+status: finalized
+content: |
+  The Orchestrator receives a single JSON object representing the `ProjectState`. This object contains:
+  - The current file tree.
+  - The path to the active task file (`active_task`).
+  - The full content of the active task file (`active_task_content`).

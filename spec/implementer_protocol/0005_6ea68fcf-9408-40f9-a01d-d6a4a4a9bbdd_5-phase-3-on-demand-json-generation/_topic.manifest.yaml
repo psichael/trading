@@ -1,0 +1,5 @@
+id: 6ea68fcf-9408-40f9-a01d-d6a4a4a9bbdd
+title: '5. Phase 3: On-Demand JSON Generation'
+status: draft
+abstract: Defines how and when the agent should produce its final machine-readable
+  output.

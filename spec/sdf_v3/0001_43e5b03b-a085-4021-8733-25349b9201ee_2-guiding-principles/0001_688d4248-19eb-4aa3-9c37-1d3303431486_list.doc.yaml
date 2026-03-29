@@ -1,0 +1,19 @@
+id: 688d4248-19eb-4aa3-9c37-1d3303431486
+type: list
+status: draft
+content: '- **AI-First, Not AI-Only:** The primary consumer is the DDI-O agent. The
+  representation is optimized for machine traversal, querying, and manipulation. Humans
+  act as supervisors.
+
+  - **Atomic Idea Units:** Each file contains one and only one indivisible semantic
+  unit.
+
+  - **Structure as Semantics:** The physical directory hierarchy represents the logical
+  structure of the knowledge.
+
+  - **UUID as Identity:** An item''s identity is a unique, immutable UUID, completely
+  decoupled from its filename or position in a sequence. This allows for robust cross-referencing
+  and transactional safety during reordering operations.
+
+  - **Explicit Governance:** High-level intent, ownership, and architectural relationships
+  are explicitly declared in machine-readable manifest files.'

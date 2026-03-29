@@ -1,0 +1,18 @@
+id: 5b9d71b9-0101-4359-8fbd-910f4b8ea612
+type: task
+title: Update Agent Protocols to reference KIF and remove COSA mentions
+status: active
+component_ids:
+- ece05c54-6ce4-4e9e-bf40-e992c13a4e1f
+implements_contract_id: 7b7abe4c-293b-4e77-a732-b32288c03a4a
+inputs: []
+outputs:
+- id: planner_protocol_update
+  type: spec_file_update
+  artifact_path: spec/planner_protocol/0000_f454d3a3-534a-42c9-a409-a7976c7f15f1_planner-agent-protocol-planner-1-0-0/_topic.manifest.yaml
+  description: ''
+content: Update the title and abstract of the Planner Protocol and other relevant
+  agent protocol manifest files (`_topic.manifest.yaml`) to explicitly mention the
+  'Knowledge Integration Focus (KIF)' or the core problem space it addresses, removing
+  any lingering high-level references to 'COSA' from the core prompt context. The
+  implementation phase will require reviewing relevant files in `spec/`.

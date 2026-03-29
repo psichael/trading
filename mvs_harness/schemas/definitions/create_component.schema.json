@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "temp_id": {
+      "type": "string",
+      "description": "A temporary, proposal-scoped ID for this new component."
+    },
+    "title": {
+      "type": "string"
+    },
+    "parent_component_id": {
+      "type": "string",
+      "description": "The ID of the parent component. Must be 'root' for top-level components, or the UUID/temp_id of another component."
+    },
+    "abstract": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "temp_id",
+    "title",
+    "parent_component_id",
+    "abstract"
+  ]
+}

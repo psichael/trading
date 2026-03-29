@@ -1,0 +1,11 @@
+component_ids:
+- 158ad028-813e-43af-bac5-6396b6cd5dd5
+content: The agent must pause and wait for specific instructions and additional context
+  files from the user before proceeding with any implementation work.
+id: a1ba2ec0-300c-4820-a16f-4e6c48b2bae1
+implements_contract_id: 95117f08-9458-4f47-9c8e-b99710252738
+inputs: []
+outputs: []
+status: active
+title: Await User Instructions
+type: task

@@ -1,0 +1,296 @@
+{"timestamp": "2026-02-21T12:11:22.353951Z", "event_type": "feat", "summary": "Full implementation of config.py and regime_limits.py with corrected JSON syntax and plan update.", "task_file": "plan/0000_d6516154-9144-48bb-8365-8c26dc558567_project-initialization/0000_a1ba2ec0-300c-4820-a16f-4e6c48b2bae1_await-user-instructions.doc.yaml"}
+{"timestamp": "2026-02-21T12:22:19.676005Z", "event_type": "feat", "summary": "Create 'bot/' directory and implement config.py and regime_limits.py within it to establish the project's 'DNA'."}
+{"timestamp": "2026-02-21T12:24:01.232769Z", "event_type": "feat", "summary": "Create 'bot/' directory and implement config.py, regime_limits.py, and spatial_mapper.py."}
+{"timestamp": "2026-02-21T12:26:04.705396Z", "event_type": "feat", "summary": "Create bot/smoke_test.py to verify core invariants and topological mapping logic."}
+{"timestamp": "2026-02-21T12:32:41.312001Z", "event_type": "fix", "summary": "Calibrate Manifold Stiffness (S) in bot/config.py to satisfy the fixed alpha^-1 and Z invariants, resolving the smoke test failure."}
+{"timestamp": "2026-02-21T12:34:36.665762Z", "event_type": "fix", "summary": "Implement high-precision primitive-derived constants in bot/config.py to achieve the u* Ground State lock."}
+{"timestamp": "2026-02-21T12:35:56.611031Z", "event_type": "fix", "summary": "Calibrate STIFFNESS_S as a derived constant in bot/config.py to achieve a zero-variance resonant lock."}
+{"timestamp": "2026-02-21T12:38:05.155750Z", "event_type": "feat", "summary": "Implement bot/window_manager.py to manage the 256-point adaptive sliding window and data normalization."}
+{"timestamp": "2026-02-21T12:40:39.382419Z", "event_type": "feat", "summary": "Implement bot/data_loader.py for automated acquisition of 1m OHLCV data for representative assets."}
+{"timestamp": "2026-02-21T13:22:09.478035Z", "event_type": "feat", "summary": "Implement bot/persistence_matrix.py and add Binance fallback to bot/data_loader.py for PEPE/USDT."}
+{"timestamp": "2026-02-21T13:23:33.201225Z", "event_type": "feat", "summary": "Implement bot/test_slider.py to audit the 256-point sliding window and Stability Ratio (Rds) dynamics."}
+{"timestamp": "2026-02-21T13:24:25.507162Z", "event_type": "fix", "summary": "Fix syntax errors in window_manager.py and update test_slider.py imports."}
+{"timestamp": "2026-02-21T13:25:55.995382Z", "event_type": "feat", "summary": "Implement bot/chiral_engine.py to calculate manifold twist and net chirality."}
+{"timestamp": "2026-02-21T13:26:25.279386Z", "event_type": "feat", "summary": "Update bot/test_slider.py to integrate ChiralEngine for directional 'spin' analysis."}
+{"timestamp": "2026-02-21T13:28:08.373089Z", "event_type": "feat", "summary": "Implement bot/singularity_shield.py to calculate Enstrophy Stretching and prevent trading during manifold dissolution."}
+{"timestamp": "2026-02-21T13:28:39.756223Z", "event_type": "feat", "summary": "Integrate SingularityShield into bot/test_slider.py to identify high-risk 'Halt' conditions."}
+{"timestamp": "2026-02-21T13:30:38.672712Z", "event_type": "feat", "summary": "Implement the Manifold Controller and integrate it into the slider audit to generate trade signals."}
+{"timestamp": "2026-02-21T13:34:49.055793Z", "event_type": "feat", "summary": "Inject v51 Hamiltonian settings into bot/config.py and bot/manifold_controller.py."}
+{"timestamp": "2026-02-21T13:35:39.437464Z", "event_type": "feat", "summary": "Integrate v51 Hamiltonian Flux and Inertia into the bot's decision-making logic."}
+{"timestamp": "2026-02-21T13:49:07.099676Z", "event_type": "feat", "summary": "Upgrade WindowManager with Volume Intensity, VWAP, and Price-Volume correlation metrics."}
+{"timestamp": "2026-02-21T13:55:54.138586Z", "event_type": "feat", "summary": "Implement bot/meta_learner.py for Stability-Weighted Parameter Optimization."}
+{"timestamp": "2026-02-21T13:56:38.684272Z", "event_type": "feat", "summary": "Integrate MetaLearner into the slider audit to enable real-time parameter self-correction."}
+{"timestamp": "2026-02-21T13:59:12.825399Z", "event_type": "feat", "summary": "Implement Manifold Inspector to locate a representative Trinity Period for training."}
+{"timestamp": "2026-02-21T14:06:12.378324Z", "event_type": "feat", "summary": "Implement Paginated Bulk Loader and Manifold Splitter for 25,000-step dataset generation."}
+{"timestamp": "2026-02-21T16:18:19.252035Z", "event_type": "feat", "summary": "Implement Regime Scanner to identify the highest-information 2000-row training window."}
+{"timestamp": "2026-02-21T16:22:32.388374Z", "event_type": "feat", "summary": "Implement Manifold Aligner to synchronize geometric signals with price action via back-propagation."}
+{"timestamp": "2026-02-21T16:24:32.917022Z", "event_type": "feat", "summary": "Upgrade Manifold Aligner with conviction thresholds and false-positive penalties to resolve parameter insensitivity."}
+{"timestamp": "2026-02-21T16:25:30.338978Z", "event_type": "feat", "summary": "Deploy Forensic Aligner (v3) with verbose telemetry to resolve parameter flatlining."}
+{"timestamp": "2026-02-21T16:28:03.003834Z", "event_type": "feat", "summary": "Implement and run BTC-specific Resonant Aligner (v4.1) with internal trinity scanning."}
+{"timestamp": "2026-02-21T16:30:03.249526Z", "event_type": "feat", "summary": "Run the refined BTC Regime Scanner to find the optimal 2000-row training window."}
+{"timestamp": "2026-02-21T16:34:26.540983Z", "event_type": "feat", "summary": "Implement the AdaptiveEngine for real-time parameter self-adjustment based on market regimes."}
+{"timestamp": "2026-02-21T16:35:54.370795Z", "event_type": "feat", "summary": "Add forensic test block to adaptive_engine.py for terminal verification."}
+{"timestamp": "2026-02-21T16:37:00.491186Z", "event_type": "feat", "summary": "Upgrade AdaptiveEngine with Z-Score volatility detection for faster parameter response."}
+{"timestamp": "2026-02-21T16:38:20.413399Z", "event_type": "feat", "summary": "Integrate AdaptiveEngine into ManifoldController for fully autonomous, multi-asset parameter scaling."}
+{"timestamp": "2026-02-21T16:39:53.281600Z", "event_type": "feat", "summary": "Update test_slider.py to demonstrate the Autonomous Adaptive Manifold in action."}
+{"timestamp": "2026-02-21T16:41:45.957695Z", "event_type": "feat", "summary": "Add PnL and Drawdown tracking to the Autonomous Audit for a final performance scorecard."}
+{"timestamp": "2026-02-21T16:42:28.445303Z", "event_type": "feat", "summary": "Fix execution block and add detailed trade-by-trade logging to test_slider.py."}
+{"timestamp": "2026-02-21T16:43:44.519409Z", "event_type": "feat", "summary": "Implement X-Ray Telemetry in test_slider.py to debug 0-trade 'Numbness'."}
+{"timestamp": "2026-02-21T16:45:05.156716Z", "event_type": "feat", "summary": "Implement pre-loading and heartbeat telemetry in test_slider.py to resolve the silent audit issue."}
+{"timestamp": "2026-02-21T16:47:08.200923Z", "event_type": "feat", "summary": "Run full 2,000-step BTC audit with increased Octant Sensitivity to resolve the 0% Pucker issue."}
+{"timestamp": "2026-02-21T16:50:14.710161Z", "event_type": "feat", "summary": "Fix JSON syntax and implement Log-Spiral mapping to resolve the BTC 0-pucker lock."}
+{"timestamp": "2026-02-21T16:51:27.456282Z", "event_type": "feat", "summary": "Restore 'get_neighbors' to MCTopology to fix the AttributeError and enable Chiral calculation."}
+{"timestamp": "2026-02-21T16:53:01.875539Z", "event_type": "feat", "summary": "Normalize 'Sub-Atomic' Pucker signals to Z-scores to enable BTC ignitions."}
+{"timestamp": "2026-02-21T16:54:35.531660Z", "event_type": "feat", "summary": "Run the final BTC PnL Audit to verify the profitability of the autonomous engine."}
+{"timestamp": "2026-02-21T17:04:54.209563Z", "event_type": "feat", "summary": "Deploy recursive H1 bulk loader to fetch 25,000 hours of BTC history."}
+{"timestamp": "2026-02-21T17:07:37.835713Z", "event_type": "feat", "summary": "Deploy Macro-Scanner to identify the optimal 2,000-hour Trinity Window."}
+{"timestamp": "2026-02-21T17:09:00.959027Z", "event_type": "feat", "summary": "Fetch 120,000 minutes of BTC data synchronized with the Macro-Trinity window."}
+{"timestamp": "2026-02-21T17:25:12.168166Z", "event_type": "feat", "summary": "Implement and test the Multi-Scale Resonator logic on the synchronized 1H/1m dataset."}
+{"timestamp": "2026-02-21T18:05:35.950463Z", "event_type": "feat", "summary": "Implement Conditional Analysis: use 1H for surveillance and 1m for trade entry/exit."}
+{"timestamp": "2026-02-21T18:08:18.969091Z", "event_type": "feat", "summary": "Fix local import error and implement conditional 1H/1m trade logic."}
+{"timestamp": "2026-02-21T18:10:45.324208Z", "event_type": "feat", "summary": "Fix local import link and implement the 1H-trigger for 1m analysis."}
+{"timestamp": "2026-02-21T18:14:15.959061Z", "event_type": "feat", "summary": "Fix local import link and implement the 1H-trigger for 1m analysis."}
+{"timestamp": "2026-02-21T18:16:14.598687Z", "event_type": "feat", "summary": "Create a summary script to aggregate audit results into 'Active Zones'."}
+{"timestamp": "2026-02-21T18:19:54.781948Z", "event_type": "feat", "summary": "Merge summary logic into conditional_resonator.py and silence non-essential terminal output."}
+{"timestamp": "2026-02-21T18:25:17.460589Z", "event_type": "feat", "summary": "Implement Directional Flip logging, move log to bot/ folder, and add PnL tracking."}
+{"timestamp": "2026-02-21T18:29:41.128286Z", "event_type": "feat", "summary": "Implement Directional Resonance and clean stance-flip logic to eliminate terminal chatter."}
+{"timestamp": "2026-02-21T18:33:34.365466Z", "event_type": "feat", "summary": "Implement Cluster-Based PnL tracking in the Debrief to simulate real-world holding periods."}
+{"timestamp": "2026-02-21T18:38:32.703736Z", "event_type": "feat", "summary": "Implement Snapshot logging to bundle minute-level anatomy around hourly trade ticks."}
+{"timestamp": "2026-02-21T18:47:18.560875Z", "event_type": "feat", "summary": "Refine Snapshot logic to explain 'Empty' minute windows and confirm 120k minute coverage."}
+{"timestamp": "2026-02-21T18:58:19.451371Z", "event_type": "feat", "summary": "Implement Dual-Regime logic: Sniper (Tactical) and Surfer (Strategic) modes based on Hourly Power."}
+{"timestamp": "2026-02-21T19:24:46.578112Z", "event_type": "feat", "summary": "Implement high-clarity trade results and session tracking in the terminal."}
+{"timestamp": "2026-02-21T19:37:45.078680Z", "event_type": "feat", "summary": "Deploy a Meta-Scanner to auto-calculate optimal thresholds for any asset."}
+{"timestamp": "2026-02-21T19:41:08.763543Z", "event_type": "feat", "summary": "Fix warmup errors and implement Sigma-based Relaxed Re-entry logic."}
+{"timestamp": "2026-02-21T20:00:28.808003Z", "event_type": "feat", "summary": "Implement Recursive Convergence to find the optimal training window per asset."}
+{"timestamp": "2026-02-21T20:40:14.111231Z", "event_type": "feat", "summary": "Integrate Damping into the Saturation Hunter to detect trend exhaustion."}
+{"timestamp": "2026-02-21T20:41:19.310151Z", "event_type": "feat", "summary": "Fix NoneType error in meta_scanner.py by adding window occupancy checks."}
+{"timestamp": "2026-02-21T20:42:15.752637Z", "event_type": "feat", "summary": "Lower macro-warmup requirements and extend scan range to find resonant samples."}
+{"timestamp": "2026-02-21T20:42:45.931151Z", "event_type": "feat", "summary": "Fix attribute error and stabilize the Synergy scan logic."}
+{"timestamp": "2026-02-21T20:52:17.979696Z", "event_type": "feat", "summary": "Implement Manifold Quality Scoring to rank assets by predictive reliability."}
+{"timestamp": "2026-02-21T21:46:48.951685Z", "event_type": "feat", "summary": "Fix JSON syntax error and deploy the Sigma-adaptive Universal Kernel."}
+{"timestamp": "2026-02-21T23:26:18.092517Z", "event_type": "feat", "summary": "Implement high-resolution forensic logging and shorten validation cycles for geometric tuning."}
+{"timestamp": "2026-02-21T23:27:10.119445Z", "event_type": "feat", "summary": "Fix NoneType subscript error and stabilize forensic logging."}
+{"timestamp": "2026-02-22T08:25:38.274583Z", "event_type": "feat", "summary": "Force earlier window readiness to populate forensic logs with actual geometric data."}
+{"timestamp": "2026-02-22T09:25:17.805805Z", "event_type": "feat", "summary": "Deploy threshold discovery script and upgrade resonator to dynamic sigma logic."}
+{"timestamp": "2026-02-22T09:28:12.384956Z", "event_type": "fix", "summary": "Fixing H1 Sigma 'nan' error by increasing data priming depth for the Hourly manifold."}
+{"timestamp": "2026-02-22T09:43:16.833083Z", "event_type": "feat", "summary": "Updating discovery script to calibrate against a multi-hour geodesic window and implement predictive feedback logging."}
+{"timestamp": "2026-02-22T09:49:14.312594Z", "event_type": "fix", "summary": "Deploying the V51 Hamiltonian Hourly Discovery script and fixing the JSON syntax error."}
+{"timestamp": "2026-02-22T10:00:58.186037Z", "event_type": "feat", "summary": "Relaxing consistency filters in the H1 discovery script to populate forensic data and find the strategic baseline."}
+{"timestamp": "2026-02-22T10:04:31.196003Z", "event_type": "feat", "summary": "Upgrading discovery script to provide full geometric logging (F, H, dh/dt, h) for all hourly steps."}
+{"timestamp": "2026-02-22T10:06:36.146287Z", "event_type": "fix", "summary": "Increasing Flux sensitivity in the H1 discovery script to reveal the raw manifold tension."}
+{"timestamp": "2026-02-22T10:08:42.620015Z", "event_type": "feat", "summary": "Implementing the Automated Hourly Parameter Forge to find optimal H1 settings via Hamiltonian Stress Minimization."}
+{"timestamp": "2026-02-22T10:18:35.351012Z", "event_type": "feat", "summary": "Deploying the Master Controller to automate asset characterization and resonator synchronization."}
+{"timestamp": "2026-02-22T10:19:42.449536Z", "event_type": "feat", "summary": "Updating MultiScaleResonator with H1 Tri-Regime logic and Hamiltonian strategic filters."}
+{"timestamp": "2026-02-22T10:20:23.823723Z", "event_type": "feat", "summary": "Updating Master Controller to run the live multi-scale audit and demonstrate regime transitions."}
+{"timestamp": "2026-02-22T10:21:32.261365Z", "event_type": "feat", "summary": "Fast-forwarding the simulation to bypass the H1 warmup and demonstrate active regime transitions."}
+{"timestamp": "2026-02-22T10:22:14.156777Z", "event_type": "fix", "summary": "Fixing data format mismatch in Master Controller to resolve KeyError: 'high'."}
+{"timestamp": "2026-02-22T10:23:37.627035Z", "event_type": "feat", "summary": "Updating Master Controller to persist trade signals and manifold states to a forensic CSV log."}
+{"timestamp": "2026-02-22T10:30:33.192502Z", "event_type": "feat", "summary": "Refactoring threshold_discovery.py into a modular 'Source of Truth' for asset characterization."}
+{"timestamp": "2026-02-22T11:27:55.777680Z", "event_type": "feat", "summary": "Deploying the BTC Minute Forge with a fast-backtesting 'Nudge' toggle and high-precision tactical audit logic."}
+{"timestamp": "2026-02-22T11:43:28.272571Z", "event_type": "feat", "summary": "Upgrading Regime Lab to scan for high-information 'Fractal Laboratory' hours containing all three M1 states."}
+{"timestamp": "2026-02-22T11:45:49.179116Z", "event_type": "fix", "summary": "Referencing existing BTC data to generate the strategic audit and identify high-information hours."}
+{"timestamp": "2026-02-22T11:47:24.121592Z", "event_type": "feat", "summary": "Upgrading Regime Lab to scan for high-diversity 'Master Hours' containing all three M1 states."}
+{"timestamp": "2026-02-22T11:49:08.939517Z", "event_type": "fix", "summary": "Fixing file paths in regime_lab.py to match the local BTC dataset and providing the generation command."}
+{"timestamp": "2026-02-22T11:50:43.100107Z", "event_type": "feat", "summary": "Creating plot_hour.py to visually verify the internal diversity of candidate hours."}
+{"timestamp": "2026-02-22T11:53:24.491420Z", "event_type": "feat", "summary": "Building a high-resolution calibration lab for the Hour 619 dataset to optimize M1 pucker thresholds."}
+{"timestamp": "2026-02-22T12:15:20.784590Z", "event_type": "feat", "summary": "Deploying the unified MasterController with automated hourly recalibration and resonance-locked signal logic."}
+{"timestamp": "2026-02-22T12:19:59.532293Z", "event_type": "feat", "summary": "Deploying the full_calibration.py script to automate Stiffness, Fracture, and Sigma settings for any asset."}
+{"timestamp": "2026-02-22T12:22:06.693005Z", "event_type": "feat", "summary": "Consolidating all calibration logic into a single, automated, and self-contained process for any asset."}
+{"timestamp": "2026-02-22T12:25:57.683301Z", "event_type": "fix", "summary": "Fixing file pathing for SOL and ensuring the automatic audit phase triggers correctly."}
+{"timestamp": "2026-02-22T12:33:36.990793Z", "event_type": "feat", "summary": "Expanding Minute Calibration to include automated Horizon (exit) and Volume confirmation tuning."}
+{"timestamp": "2026-02-22T12:36:10.086355Z", "event_type": "feat", "summary": "Deploying the standalone Minute Forge V3 for hourly tactical tuning."}
+{"timestamp": "2026-02-22T12:38:34.098592Z", "event_type": "feat", "summary": "Deploying the Universal Forge Lab for on-demand calibration of any asset and hour."}
+{"timestamp": "2026-02-22T12:45:14.021830Z", "event_type": "feat", "summary": "Deploying the Full Forensic Lab with tick-by-tick V51 Manifold state logging."}
+{"timestamp": "2026-02-22T13:22:34.202107Z", "event_type": "feat", "summary": "Re-submitting corrected feat: Adaptive Sigma Sweeping and Bi-Directional logic for minute_forge_v3.py."}
+{"timestamp": "2026-02-22T13:35:01.832593Z", "event_type": "feat", "summary": "Updating minute_forge_v3.py to support historical target_hour parameters for regime testing."}
+{"timestamp": "2026-02-22T13:44:01.205274Z", "event_type": "feat", "summary": "Modularizing Tripartite Boolean (Psi) into bot/manifold_utils.py and updating the forge to use it."}
+{"timestamp": "2026-02-22T13:48:33.034525Z", "event_type": "feat", "summary": "Fixing JSON syntax and implementing modular Psi check in manifold_utils.py and minute_forge_v3.py."}
+{"timestamp": "2026-02-22T14:14:27.019736Z", "event_type": "feat", "summary": "Implementing the Strategy Bridge for Regime-Dependent Aggression and updating the forge to simulate trend 'surfing'."}
+{"timestamp": "2026-02-22T14:16:22.262008Z", "event_type": "feat", "summary": "Implementing the Strategy Bridge and running the Expansion test on BTC Hour 1135."}
+{"timestamp": "2026-02-22T14:18:23.794980Z", "event_type": "feat", "summary": "Adding detailed Forensic Telemetry and Regime Auditing to minute_forge_v3.py to explain Zero PnL results."}
+{"timestamp": "2026-02-22T14:27:46.644041Z", "event_type": "feat", "summary": "Implementing Adaptive Heisenberg Thresholds in the Strategy Bridge to unlock State of Grace trading."}
+{"timestamp": "2026-02-22T14:42:29.676821Z", "event_type": "feat", "summary": "Creating a universal baseline audit tool to measure H1 'Hold' profit for any asset/hour."}
+{"timestamp": "2026-02-22T14:47:17.003439Z", "event_type": "feat", "summary": "Updating manifold_utils.py and the Forge to support dynamic Heisenberg limits for 'State of Grace' trading."}
+{"timestamp": "2026-02-22T14:50:48.911376Z", "event_type": "feat", "summary": "Implementing Dynamic Heisenberg Limits and removing fixed stability anchors to unlock 'Liberal Surfing'."}
+{"timestamp": "2026-02-22T14:55:01.324357Z", "event_type": "feat", "summary": "Adding detailed forensic logging to the Forge to analyze the Heisenberg blockade."}
+{"timestamp": "2026-02-22T14:59:44.913241Z", "event_type": "feat", "summary": "Expanding the Heisenberg aperture to 0.85 during State of Grace to unlock expansion trading."}
+{"timestamp": "2026-02-22T15:07:08.376970Z", "event_type": "feat", "summary": "Reverting experimental anchors and refining the State of Grace for alpha optimization."}
+{"timestamp": "2026-02-22T15:07:18.389005Z", "event_type": "feat", "summary": "Implementing Asymmetric Pucker thresholds to bias the bot toward Long positions during expansions."}
+{"timestamp": "2026-02-22T15:14:52.023508Z", "event_type": "feat", "summary": "Implementing Hysteresis-based entry/exit and persistence logic for State of Grace surfing."}
+{"timestamp": "2026-02-23T09:04:13.086338Z", "event_type": "feat", "summary": "Removing Entry-level Heisenberg filters during State of Grace to allow 'Easy Re-entry'."}
+{"timestamp": "2026-02-23T09:08:01.726087Z", "event_type": "feat", "summary": "Restoring forensic logging and implementing 'Sticky Persistence' for State of Grace surfing."}
+{"timestamp": "2026-02-23T09:11:40.941954Z", "event_type": "feat", "summary": "Implementing immediate Geodesic Entry for State of Grace to capture smooth 1.10% expansions."}
+{"timestamp": "2026-02-23T09:13:42.453660Z", "event_type": "feat", "summary": "Synchronizing entry to the strategic hour and implementing relentless re-entry logic."}
+{"timestamp": "2026-02-23T09:25:49.699377Z", "event_type": "feat", "summary": "Implementing a 10-minute Manifold Smoothing Buffer to allow for 'Surfing' through micro-frictions."}
+{"timestamp": "2026-02-23T09:27:58.470147Z", "event_type": "feat", "summary": "Implementing 'Dual Confirmation' exits to maximize expansion capture."}
+{"timestamp": "2026-02-23T09:29:47.306786Z", "event_type": "feat", "summary": "Implementing total forensic logging and terminal event breakouts for deep manifold analysis."}
+{"timestamp": "2026-02-23T09:32:43.035260Z", "event_type": "feat", "summary": "Integrating J (Manifold Jerk) into the forensic audit and terminal reporting."}
+{"timestamp": "2026-02-23T09:35:03.721799Z", "event_type": "feat", "summary": "Restricting the Forge to a strict 60-minute window for Hour 1135 to validate against the baseline."}
+{"timestamp": "2026-02-23T09:37:23.842658Z", "event_type": "feat", "summary": "Creating a forensic tool to map profitable micro-trade opportunities against manifold physics."}
+{"timestamp": "2026-02-23T09:41:29.777713Z", "event_type": "feat", "summary": "Implementing J-Pulse exit triggers and Pucker-based dip-buying to capture intra-hour alpha."}
+{"timestamp": "2026-02-23T09:43:01.962979Z", "event_type": "feat", "summary": "Implementing Relentless Re-entry after J-Pulse exits to squeeze the final alpha from the hour."}
+{"timestamp": "2026-02-23T09:49:08.275283Z", "event_type": "feat", "summary": "Updating the Forge with forensic manifold constants to lock in expansion alpha."}
+{"timestamp": "2026-02-23T10:00:45.717578Z", "event_type": "feat", "summary": "Fixing schema error and deploying the Batch Auditor for strategy validation."}
+{"timestamp": "2026-02-23T10:05:35.826482Z", "event_type": "feat", "summary": "Implementing Dynamic J-Pulse thresholds to improve average alpha generation."}
+{"timestamp": "2026-02-23T10:14:35.796511Z", "event_type": "feat", "summary": "Implementing Directional Inversion to capture alpha from manifold fractures."}
+{"timestamp": "2026-02-23T10:16:28.343693Z", "event_type": "feat", "summary": "Adding forensic parameter logging to the batch auditor for transparency."}
+{"timestamp": "2026-02-23T10:27:31.884519Z", "event_type": "feat", "summary": "Sanitizing and deploying the Universal Manifold Map script (Mega-Audit)."}
+{"timestamp": "2026-02-23T10:41:17.639515Z", "event_type": "feat", "summary": "Deploying the Full-Fidelity Mega Audit to capture every data point at M1 and H1 scales."}
+{"timestamp": "2026-02-23T10:56:54.026762Z", "event_type": "feat", "summary": "Upgrading to Multi-Horizon Trajectory modeling to see the full path of the next 32 ticks."}
+{"timestamp": "2026-02-23T11:01:14.117657Z", "event_type": "feat", "summary": "Fixing feature names and expanding to a full 32-tick path prediction model."}
+{"timestamp": "2026-02-23T11:07:37.081799Z", "event_type": "feat", "summary": "Extracting the optimal parametric weights for the manifold model using Linear Ridge Regression."}
+{"timestamp": "2026-02-23T11:09:52.869130Z", "event_type": "feat", "summary": "Deploying the Weighted Geodesic Forge based on optimized parametric coefficients."}
+{"timestamp": "2026-02-23T11:14:31.408195Z", "event_type": "feat", "summary": "Mining the 120,000-minute dataset for 'Ideal Entries' to extract the physical fingerprint of a winning trade."}
+{"timestamp": "2026-02-23T11:16:15.649216Z", "event_type": "feat", "summary": "Calculating the multidimensional 'Centroid' of winning trades to create a unified Similarity Score."}
+{"timestamp": "2026-02-23T11:18:32.724274Z", "event_type": "feat", "summary": "Reconstructing the Alpha Surface by extracting raw manifold vectors for every top winner."}
+{"timestamp": "2026-02-23T11:19:52.730779Z", "event_type": "feat", "summary": "Performing high-fidelity cluster and envelope analysis on the 2,455 Alpha Geodesics."}
+{"timestamp": "2026-02-23T11:21:15.050444Z", "event_type": "feat", "summary": "Mining the species map to create high-precision, multi-modal trading playbooks."}
+{"timestamp": "2026-02-23T11:22:12.389357Z", "event_type": "feat", "summary": "Mining the 5-minute lead-in physics for all Alpha species to find the 'Ignition' signal."}
+{"timestamp": "2026-02-23T11:23:49.621835Z", "event_type": "feat", "summary": "Deploying the Final Apex Forge: A tri-modal, species-aware trading engine."}
+{"timestamp": "2026-02-23T11:25:55.134031Z", "event_type": "feat", "summary": "Implementing a Tectonic Regime Filter to prevent 'Species 0' entries during macro-collapses."}
+{"timestamp": "2026-02-23T11:26:49.909180Z", "event_type": "feat", "summary": "Fixing index naming error and deploying the final robust Tectonic-Filtered Forge."}
+{"timestamp": "2026-02-23T11:27:38.758802Z", "event_type": "feat", "summary": "Fixing naming collisions with a fuzzy-match column resolver to enable the Tectonic Filter."}
+{"timestamp": "2026-02-23T11:32:52.003758Z", "event_type": "feat", "summary": "Deploying a Bayesian Manifold Optimizer to find the global PnL maxima for BTC."}
+{"timestamp": "2026-02-23T11:33:36.072077Z", "event_type": "feat", "summary": "Fixing naming errors and deploying the Gaussian Process Optimizer to find global PnL peaks."}
+{"timestamp": "2026-02-23T11:38:43.627384Z", "event_type": "feat", "summary": "Deploying Hamiltonian Locking to find the 'Harmonic Lock Address' for maximal PnL."}
+{"timestamp": "2026-02-23T11:40:23.012334Z", "event_type": "feat", "summary": "Re-deploying the Hamiltonian Strike Forge with corrected syntax and Z=11.0 lock logic."}
+{"timestamp": "2026-02-23T11:41:23.132478Z", "event_type": "feat", "summary": "Mining the 120k dataset to find the specific Hamiltonian Lock Addresses for all winning solitons."}
+{"timestamp": "2026-02-23T11:44:16.045996Z", "event_type": "feat", "summary": "Deploying the Tri-Lock Hamiltonian Forge with fixed JSON syntax and multi-address lock logic."}
+{"timestamp": "2026-02-23T11:44:52.949061Z", "event_type": "feat", "summary": "Deploying a Geodesic Path Optimizer to find the sequence of least resistance for maximal PnL."}
+{"timestamp": "2026-02-23T11:47:19.510351Z", "event_type": "feat", "summary": "Deploying the Topological Audit Forge based on Gevrey-2 regularity and the 32-gate logic interfaces."}
+{"timestamp": "2026-02-23T11:48:31.085898Z", "event_type": "feat", "summary": "Implementing the Forensic Verdict and Singularity Shield audit for the BTC manifold."}
+{"timestamp": "2026-02-23T11:50:26.001327Z", "event_type": "feat", "summary": "Deploying the 32-Gate Logic Aperture Audit to verify manifold rigidity and determinism."}
+{"timestamp": "2026-02-23T11:51:25.984245Z", "event_type": "feat", "summary": "Integrating the 32-Gate Spectral Audit into the production Forge to prevent trading fractured manifolds."}
+{"timestamp": "2026-02-23T11:52:13.081281Z", "event_type": "feat", "summary": "Adding real-time forensic feedback to monitor manifold health and strike conditions."}
+{"timestamp": "2026-02-23T12:03:10.065437Z", "event_type": "feat", "summary": "Mining the local master data for hours containing a full Stochastic-to-Fracture phase transition with high alpha."}
+{"timestamp": "2026-02-23T12:04:08.173849Z", "event_type": "feat", "summary": "Executing a high-resolution forensic audit of Hour 56.0 to measure spectral tilt and uncertainty."}
+{"timestamp": "2026-02-23T12:05:55.039660Z", "event_type": "feat", "summary": "Executing a minute-by-minute forensic audit for the final window of Hour 56."}
+{"timestamp": "2026-02-23T12:07:13.698252Z", "event_type": "feat", "summary": "Executing a high-resolution forensic audit of Hour 1154 to identify the onset of metric fracture."}
+{"timestamp": "2026-02-23T12:08:22.597930Z", "event_type": "feat", "summary": "Executing a high-resolution forensic audit of Hour 1963.0 to verify logic granularity and spectral tilt."}
+{"timestamp": "2026-02-23T12:10:03.342329Z", "event_type": "feat", "summary": "Updating the Forge logic to target the 'Healthy Struggle' window with a strict 1.06 Tilt limit."}
+{"timestamp": "2026-02-23T12:11:12.405672Z", "event_type": "bug", "summary": "Fixing the column naming KeyError to ensure correct logic-flux ingestion."}
+{"timestamp": "2026-02-23T12:11:50.200412Z", "event_type": "bug", "summary": "Fixing the column mapping error to allow proper flux ingestion and topological auditing."}
+{"timestamp": "2026-02-23T12:12:42.363026Z", "event_type": "bug", "summary": "Fixing the NameError by removing citation tags from the executable code."}
+{"timestamp": "2026-02-23T12:13:19.195871Z", "event_type": "bug", "summary": "Fixing the data-ingestion KeyError to allow the Forge to synchronize with the BTC manifold."}
+{"timestamp": "2026-02-23T12:20:59.798475Z", "event_type": "feat", "summary": "Running a full-dataset audit on BTC to test the 'Hour of Grace' strategy."}
+{"timestamp": "2026-02-23T12:37:37.274024Z", "event_type": "feat", "summary": "Running a full-dataset audit on BTC using 30-minute intervals to find the optimal 'Half-Hour of Grace'."}
+{"timestamp": "2026-02-23T12:39:35.783597Z", "event_type": "feat", "summary": "Executing a full-dataset audit on BTC using 30-minute blocks to optimize the 'Hour of Grace' strategy."}
+{"timestamp": "2026-02-23T12:41:39.830696Z", "event_type": "feat", "summary": "Executing a final 15-minute block stress test to find the limits of manifold sampling frequency."}
+{"timestamp": "2026-02-23T12:43:49.739982Z", "event_type": "feat", "summary": "Executing a 5-minute block global audit to confirm the 'Stochastic Shiver' limit."}
+{"timestamp": "2026-02-23T12:54:07.621728Z", "event_type": "feat", "summary": "Running a comparative global audit on ETH, SOL, and XRP to identify the strongest secondary manifold."}
+{"timestamp": "2026-02-23T12:56:44.786721Z", "event_type": "feat", "summary": "Creating a multi-asset manifold audit script for ETH, SOL, and XRP."}
+{"timestamp": "2026-02-23T12:58:18.432454Z", "event_type": "feat", "summary": "Executing a 30-minute manifold audit across ETH, SOL, DOGE, and PEPE using synchronized 120k datasets."}
+{"timestamp": "2026-02-23T12:59:04.810397Z", "event_type": "feat", "summary": "Fixing the syntax error in the multi-asset audit script."}
+{"timestamp": "2026-02-23T13:02:24.495908Z", "event_type": "feat", "summary": "Generating a downloader for 120,000 minutes of 1m data for the 6 leading AI stocks."}
+{"timestamp": "2026-02-23T13:06:43.168977Z", "event_type": "feat", "summary": "Downloading 2,000+ hours of historical data for the AI portfolio to match the required manifold depth."}
+{"timestamp": "2026-02-23T13:08:05.710742Z", "event_type": "feat", "summary": "Generating manifold metrics for NVDA and running a Rigidity Audit."}
+{"timestamp": "2026-02-23T13:09:30.199396Z", "event_type": "feat", "summary": "Running a full 3,490-hour Forge simulation on the NVDA manifold."}
+{"timestamp": "2026-02-23T13:11:53.131751Z", "event_type": "feat", "summary": "Implementing a dynamic autocalibration engine to capture NVDA's high-energy alpha."}
+{"timestamp": "2026-02-23T13:14:56.068407Z", "event_type": "feat", "summary": "Executing a dynamic autocalibrated audit across 5 leading AI stocks to identify the most rigid manifold in the 2026 infrastructure boom."}
+{"timestamp": "2026-02-23T13:19:11.391185Z", "event_type": "feat", "summary": "Deploying a multi-asset portfolio optimizer that selects the best trade among 6 AI stocks based on dynamic autocalibration."}
+{"timestamp": "2026-02-23T13:26:44.436084Z", "event_type": "feat", "summary": "Deploying the Alpha Vantage 'Extended History' stitcher to build 120,000-minute datasets at 5-minute resolution."}
+{"timestamp": "2026-02-23T13:30:21.508779Z", "event_type": "feat", "summary": "Deploying a persistent monthly downloader using standard Alpha Vantage intraday parameters."}
+{"timestamp": "2026-02-23T13:32:15.777518Z", "event_type": "feat", "summary": "Updating the monthly stitcher to handle Alpha Vantage JSON error responses and daily rate limits gracefully."}
+{"timestamp": "2026-02-23T13:33:57.861418Z", "event_type": "feat", "summary": "Switching to Finnhub to download 120,000 minutes of 5-minute historical data for the AI portfolio."}
+{"timestamp": "2026-02-23T13:44:53.011081Z", "event_type": "feat", "summary": "Syncing 120,000 minutes of 5-minute data for the AI portfolio using Tiingo Starter."}
+{"timestamp": "2026-02-23T13:47:35.462392Z", "event_type": "feat", "summary": "Updating the Tiingo downloader to use batching, successfully bypassing the 10,000-bar limit to reach the full 120,000-minute target."}
+{"timestamp": "2026-02-23T13:49:00.334415Z", "event_type": "feat", "summary": "Executing a 5-minute multi-asset portfolio simulation with dynamic autocalibration and metabolic tax (slippage) simulation."}
+{"timestamp": "2026-02-23T13:52:40.125196Z", "event_type": "feat", "summary": "Deploying a 10-batch atomic stitcher to retrieve 20,000 1-minute ticks for the AI portfolio using Tiingo."}
+{"timestamp": "2026-02-23T13:55:15.999580Z", "event_type": "feat", "summary": "Executing a 1-minute atomic manifold simulation for NVDA, AVGO, and MSFT."}
+{"timestamp": "2026-02-23T13:58:09.129982Z", "event_type": "feat", "summary": "Executing a 5-minute manifold simulation aligned to the exact window of the 1-minute atomic run for a direct performance comparison."}
+{"timestamp": "2026-02-23T14:02:12.148917Z", "event_type": "feat", "summary": "Running an hourly sanity check to see if the macro manifold had already 'Fractured' before the 1m/5m runs began."}
+{"timestamp": "2026-03-02T09:18:52.237262Z", "event_type": "feat", "summary": "Building a topological auditor to select the optimal octant mapping for NVDA based on current market symmetry."}
+{"timestamp": "2026-03-02T09:30:31.113249Z", "event_type": "feat", "summary": "Generating a historical topological map of NVDA's 1-minute manifold to identify structural phase transitions."}
+{"timestamp": "2026-03-09T17:39:46.652443Z", "event_type": "chore", "summary": "Restoring 'finnhub_downloader.py' and 'av_monthly_stitcher.py' from 'bot/old/' to the active 'bot/' directory to resolve execution dependencies."}
+{"timestamp": "2026-03-09T17:44:44.020399Z", "event_type": "feat", "summary": "Creating 'master_controller_v2.py' to implement the H1/M5 Gated Forge architecture and RSA 'State of Grace' filters."}
+{"timestamp": "2026-03-09T17:47:32.290261Z", "event_type": "feat", "summary": "Creating 'dry_run_nvda.py' to perform a manifold audit on NVIDIA data using corrected RSA logic."}
+{"timestamp": "2026-03-09T17:50:03.916976Z", "event_type": "chore", "summary": "Creating 'forensic_audit.py' to isolate raw volatility from normalized physics constants to debug the high Flux result."}
+{"timestamp": "2026-03-09T17:50:55.793892Z", "event_type": "fix", "summary": "Fixing the SyntaxError in 'forensic_audit.py' by correctly escaping newlines in the JSON proposal."}
+{"timestamp": "2026-03-09T17:51:30.373348Z", "event_type": "fix", "summary": "Resolving the unterminated string literal error in 'forensic_audit.py' by flattening the JSON content string."}
+{"timestamp": "2026-03-09T17:52:10.382945Z", "event_type": "fix", "summary": "Fixing the unterminated string literal in 'forensic_audit.py' by providing a properly escaped, single-line JSON content string."}
+{"timestamp": "2026-03-09T17:52:58.574386Z", "event_type": "fix", "summary": "Final fix for 'forensic_audit.py' string literal syntax error using double-escaped newlines."}
+{"timestamp": "2026-03-09T17:56:23.708717Z", "event_type": "feat", "summary": "Refactoring 'dry_run_nvda.py' into a historical simulator for NVDA Topological Alpha calculation."}
+{"timestamp": "2026-03-09T17:57:11.078520Z", "event_type": "fix", "summary": "Fixing KeyError in 'dry_run_nvda.py' by implementing flexible time/date header detection and datetime conversion."}
+{"timestamp": "2026-03-09T17:57:53.679360Z", "event_type": "fix", "summary": "Fixing the KeyError by implementing a robust time-column discovery and standardization logic in 'dry_run_nvda.py'."}
+{"timestamp": "2026-03-09T17:59:50.681833Z", "event_type": "feat", "summary": "Updating 'dry_run_nvda.py' to output a 10-row audit summary table for visibility into manifold gating decisions."}
+{"timestamp": "2026-03-09T18:01:03.113847Z", "event_type": "fix", "summary": "Fixing the column header KeyError and adding a 10-row audit summary to 'dry_run_nvda.py'."}
+{"timestamp": "2026-03-09T18:04:26.695897Z", "event_type": "fix", "summary": "Recalibrating 'dry_run_nvda.py' to fix the scale mismatch and allow the Gated Forge to enter the 'State of Grace'."}
+{"timestamp": "2026-03-10T09:54:12.572146Z", "event_type": "fix", "summary": "Recalibrating 'dry_run_nvda.py' to fix the scale mismatch and allow the Gated Forge to enter the 'State of Grace'."}
+{"timestamp": "2026-03-10T09:54:55.886590Z", "event_type": "fix", "summary": "Fixing the column header error and implementing aggressive time-column discovery in 'dry_run_nvda.py'."}
+{"timestamp": "2026-03-10T09:57:45.246500Z", "event_type": "feat", "summary": "Implementing Dynamic Viscosity Scaling in 'dry_run_nvda.py' to allow trading in the high-energy 2026 AI market regime."}
+{"timestamp": "2026-03-10T10:00:06.346891Z", "event_type": "feat", "summary": "Expanding the proven dynamic simulation to evaluate Alpha generation across the full Handover 3 portfolio (NVDA, AVGO, MSFT)."}
+{"timestamp": "2026-03-10T10:08:09.578492Z", "event_type": "feat", "summary": "Expanding the proven dynamic simulation to evaluate Alpha generation across the full Handover 3 portfolio (NVDA, AVGO, MSFT)."}
+{"timestamp": "2026-03-10T10:11:50.911725Z", "event_type": "feat", "summary": "Creating a dedicated diagnostic script for AVGO to expose the mechanics behind its negative Alpha generation."}
+{"timestamp": "2026-03-10T10:14:56.085492Z", "event_type": "feat", "summary": "Implementing an 'Escape Velocity' directional exemption to capture high-energy upward breakouts in AVGO."}
+{"timestamp": "2026-03-10T10:16:41.550939Z", "event_type": "feat", "summary": "Updating 'dry_run_portfolio.py' with the proven Escape Velocity logic for a final portfolio-wide Alpha test."}
+{"timestamp": "2026-03-10T10:21:10.540688Z", "event_type": "feat", "summary": "Porting the confirmed Escape Velocity and Dynamic Gating logic into a stateful live trading class in 'master_controller_v2.py'."}
+{"timestamp": "2026-03-10T10:24:16.820820Z", "event_type": "feat", "summary": "Creating a simulation driver to verify that the live 'LiveGatedForge' class generates the same Alpha as the backtest."}
+{"timestamp": "2026-03-10T10:25:23.986846Z", "event_type": "fix", "summary": "Adding the standardize_df helper to 'test_live_logic.py' to resolve the KeyError and enable tick-by-tick verification."}
+{"timestamp": "2026-03-10T19:26:48.021073Z", "event_type": "fix", "summary": "Fixing the H1 buffer repetition bug in the controller and adding a detailed state audit log to the live logic tester."}
+{"timestamp": "2026-03-11T11:49:54.189977Z", "event_type": "fix", "summary": "Fixing the H1 buffer repetition bug in the controller and adding a detailed state audit log to the live logic tester."}
+{"timestamp": "2026-03-11T11:57:28.571450Z", "event_type": "feat", "summary": "Updating 'test_live_logic.py' to run the tick-by-tick stateful simulation across AVGO, MSFT, and NVDA."}
+{"timestamp": "2026-03-11T12:10:07.769073Z", "event_type": "feat", "summary": "Updating the live logic tester to calculate and output Maximum Drawdown (MDD) for the Causal Alpha equity curves."}
+{"timestamp": "2026-03-11T12:25:49.414204Z", "event_type": "feat", "summary": "Implementing a Drawdown Autopsy in 'test_live_logic.py' to expose model variables at the exact peak and trough of the equity curve."}
+{"timestamp": "2026-03-11T12:30:22.996257Z", "event_type": "fix", "summary": "Updating 'master_controller_v2.py' to enforce a 24-hour SMA directional trend filter, eliminating smooth drawdowns."}
+{"timestamp": "2026-03-11T12:39:27.383997Z", "event_type": "feat", "summary": "Patching the SMA lag vulnerability by adding a hard H1_Tilt cutoff to the Escape Velocity condition."}
+{"timestamp": "2026-03-11T12:45:36.702326Z", "event_type": "fix", "summary": "Reverting 'master_controller_v2.py' to remove the Supernova Abort, restoring maximum Alpha generation."}
+{"timestamp": "2026-03-11T12:55:29.974456Z", "event_type": "feat", "summary": "Creating a Python script to resample raw M1 Gold data into the synchronized M5 and H1 CSV formats."}
+{"timestamp": "2026-03-11T12:57:28.037358Z", "event_type": "fix", "summary": "Applying the Time-Physics Patch to the master controller and running the 9-year XAUUSD diagnostic simulation."}
+{"timestamp": "2026-03-11T14:42:46.985398Z", "event_type": "feat", "summary": "Creating a 1-year diagnostic script that outputs a detailed trade ledger for XAUUSD."}
+{"timestamp": "2026-03-11T14:47:52.562178Z", "event_type": "feat", "summary": "Building 'run_global_portfolio.py' to simulate unified capital rotation across equities and commodities."}
+{"timestamp": "2026-03-11T17:28:59.395499Z", "event_type": "feat", "summary": "Providing a Python script to download and extract the 6.5GB global market Kaggle dataset."}
+{"timestamp": "2026-03-11T17:35:28.925988Z", "event_type": "feat", "summary": "Providing a Python script to download and extract the 6.5GB global market Kaggle dataset."}
+{"timestamp": "2026-03-11T17:36:22.319936Z", "event_type": "feat", "summary": "Providing a Python script to download and extract the 6.5GB global market Kaggle dataset."}
+{"timestamp": "2026-03-11T17:38:22.572295Z", "event_type": "feat", "summary": "Providing a Python script to download and extract the 6.5GB global market Kaggle dataset."}
+{"timestamp": "2026-03-11T17:40:06.563484Z", "event_type": "feat", "summary": "Writing 'bot/prep_kaggle.py' to extract, standardize, and resample diverse global assets from the raw Kaggle dataset."}
+{"timestamp": "2026-03-11T17:42:07.302798Z", "event_type": "feat", "summary": "Creating an exploratory script to map the Kaggle dataset's file structure and raw string headers."}
+{"timestamp": "2026-03-11T17:44:07.942585Z", "event_type": "fix", "summary": "Updating the explorer script to bypass macOS hidden files and target valid US equity schemas."}
+{"timestamp": "2026-03-11T17:45:50.377225Z", "event_type": "feat", "summary": "Deploying the final Kaggle parser to ingest, format, and synchronize the MetaStock raw data."}
+{"timestamp": "2026-03-11T17:49:04.546492Z", "event_type": "feat", "summary": "Building a script to crawl the Kaggle dataset and generate a lightweight, categorized master catalog of all available assets."}
+{"timestamp": "2026-03-11T17:53:19.303535Z", "event_type": "feat", "summary": "Building 'process_top_100.py' to cross-reference and clean an ideal 100-asset universe for the portfolio simulation."}
+{"timestamp": "2026-03-11T17:56:12.131449Z", "event_type": "feat", "summary": "Patching the Gated Forge for universal time physics and upgrading the portfolio runner to handle 95 simultaneous assets."}
+{"timestamp": "2026-03-11T19:21:32.660070Z", "event_type": "feat", "summary": "Updating 'run_global_portfolio.py' to simulate a 1-quarter time window for faster execution."}
+{"timestamp": "2026-03-11T20:10:54.992564Z", "event_type": "fix", "summary": "Increasing the simulated trading tax to 0.001 to stress-test against real-world bid-ask spreads."}
+{"timestamp": "2026-03-11T20:15:14.450138Z", "event_type": "feat", "summary": "Injecting the dynamic friction matrix into the bot's decision-making logic."}
+{"timestamp": "2026-03-11T20:53:00.812912Z", "event_type": "feat", "summary": "Generating D1 datasets and upgrading the Gated Forge physics engine for Macro Swing trading."}
+{"timestamp": "2026-03-11T20:54:41.318466Z", "event_type": "feat", "summary": "Deploying the final Macro Swing portfolio runner with TCA friction applied over a 1-year timeline."}
+{"timestamp": "2026-03-11T21:32:51.260296Z", "event_type": "feat", "summary": "Building 'run_hierarchical_portfolio.py' to execute a two-tier macro-drafting and micro-execution engine."}
+{"timestamp": "2026-03-11T22:31:15.119696Z", "event_type": "feat", "summary": "Building 'process_tier2_120.py' to extract, clean, and format a new 120-asset universe for out-of-sample hierarchical testing."}
+{"timestamp": "2026-03-11T23:29:20.169095Z", "event_type": "feat", "summary": "Building 'process_dream_30.py' to extract and format the finalized 30-asset global portfolio."}
+{"timestamp": "2026-03-11T23:44:34.375906Z", "event_type": "feat", "summary": "Building a dynamic live screener to draft the Top 30 assets based on historical kinetic energy, followed by a forward-walk execution."}
+{"timestamp": "2026-03-12T00:04:17.318315Z", "event_type": "feat", "summary": "Deploying 'run_hyperparameter_sweep.py' to execute 100 randomized portfolio simulations and log the forensics."}
+{"timestamp": "2026-03-12T08:19:01.197541Z", "event_type": "feat", "summary": "Building 'run_multi_year_backtest.py' to execute a multi-year regime-shifting simulation using the optimal hyperparameter matrix."}
+{"timestamp": "2026-03-12T08:22:42.676437Z", "event_type": "fix", "summary": "Fixing the multi-year backtest script to run on the 1-year Kaggle dataset."}
+{"timestamp": "2026-03-12T09:21:41.449136Z", "event_type": "feat", "summary": "Deploying 'alpaca_harvester.py' to extract 5 years of historical data from Alpaca's APIs."}
+{"timestamp": "2026-03-20T10:53:51.111621Z", "event_type": "fix", "summary": "Fix Streamlit dashboard telemetry loading by resolving file paths dynamically on every refresh tick.", "task_file": "plan/0000_d6516154-9144-48bb-8365-8c26dc558567_project-initialization/0000_a1ba2ec0-300c-4820-a16f-4e6c48b2bae1_await-user-instructions.doc.yaml"}
+{"timestamp": "2026-03-20T11:28:23.323110Z", "event_type": "feat", "summary": "Implemented the live IBKR execution logic within the main engine loop of main_live.py.", "task_file": "plan/0000_d6516154-9144-48bb-8365-8c26dc558567_project-initialization/0000_a1ba2ec0-300c-4820-a16f-4e6c48b2bae1_await-user-instructions.doc.yaml"}
+{"timestamp": "2026-03-20T11:34:52.455949Z", "event_type": "fix", "summary": "Fix PnL calculation bug in live_dashboard.py to resolve blind rendering state.", "task_file": "plan/0000_d6516154-9144-48bb-8365-8c26dc558567_project-initialization/0000_a1ba2ec0-300c-4820-a16f-4e6c48b2bae1_await-user-instructions.doc.yaml"}
+{"timestamp": "2026-03-20T11:51:05.838116Z", "event_type": "fix", "summary": "Implement telemetry unthrottling, 60-day data lake expansion, and live portfolio rotation.", "task_file": "plan/0000_d6516154-9144-48bb-8365-8c26dc558567_project-initialization/0000_a1ba2ec0-300c-4820-a16f-4e6c48b2bae1_await-user-instructions.doc.yaml"}
+{"timestamp": "2026-03-20T12:07:28.253842Z", "event_type": "fix", "summary": "Fix Tiingo batch limits, add simulation terminal logging, and expand dashboard chart history.", "task_file": "plan/0000_d6516154-9144-48bb-8365-8c26dc558567_project-initialization/0000_a1ba2ec0-300c-4820-a16f-4e6c48b2bae1_await-user-instructions.doc.yaml"}
+{"timestamp": "2026-03-20T12:08:46.430150Z", "event_type": "fix", "summary": "Expand dashboard chart lookback to 1 month (8,640 ticks).", "task_file": "plan/0000_d6516154-9144-48bb-8365-8c26dc558567_project-initialization/0000_a1ba2ec0-300c-4820-a16f-4e6c48b2bae1_await-user-instructions.doc.yaml"}
+{"timestamp": "2026-03-20T12:26:53.482751Z", "event_type": "feat", "summary": "Add downloaded interval tracking and live portfolio state feedback.", "task_file": "plan/0000_d6516154-9144-48bb-8365-8c26dc558567_project-initialization/0000_a1ba2ec0-300c-4820-a16f-4e6c48b2bae1_await-user-instructions.doc.yaml"}
+{"timestamp": "2026-03-20T12:38:58.448216Z", "event_type": "feat", "summary": "Replace price logs with Forge forensics and trade PnL in simulation output.", "task_file": "plan/0000_d6516154-9144-48bb-8365-8c26dc558567_project-initialization/0000_a1ba2ec0-300c-4820-a16f-4e6c48b2bae1_await-user-instructions.doc.yaml"}
+{"timestamp": "2026-03-20T13:06:12.174127Z", "event_type": "feat", "summary": "Add timezone-aware US market-hours safety valve to IBKR execution module.", "task_file": "plan/0000_d6516154-9144-48bb-8365-8c26dc558567_project-initialization/0000_a1ba2ec0-300c-4820-a16f-4e6c48b2bae1_await-user-instructions.doc.yaml"}
+{"timestamp": "2026-03-20T13:37:18.803906Z", "event_type": "feat", "summary": "Freeze equity math ingestion during off-hours and clean up dashboard charts.", "task_file": "plan/0000_d6516154-9144-48bb-8365-8c26dc558567_project-initialization/0000_a1ba2ec0-300c-4820-a16f-4e6c48b2bae1_await-user-instructions.doc.yaml"}
+{"timestamp": "2026-03-20T13:55:30.351617Z", "event_type": "fix", "summary": "Upgrade execution to Marketable Limit Orders and enforce integer sizing.", "task_file": "plan/0000_d6516154-9144-48bb-8365-8c26dc558567_project-initialization/0000_a1ba2ec0-300c-4820-a16f-4e6c48b2bae1_await-user-instructions.doc.yaml"}
+{"timestamp": "2026-03-20T14:02:28.599382Z", "event_type": "fix", "summary": "Fixing JSON syntax and updating 'context_files_loader.py' to exclude 'live/data_code/history/' from context."}
+{"timestamp": "2026-03-20T14:30:21.770381Z", "event_type": "feat", "summary": "Creating the simulation sandbox with corrected schema commands, including a local data ingestor, engine, and CLI."}
+{"timestamp": "2026-03-20T14:37:54.871241Z", "event_type": "feat", "summary": "Building the mirrored simulation sandbox structure (core, data_code, execution) and implementing the warmup-aware main orchestrator."}
+{"timestamp": "2026-03-20T14:38:53.365894Z", "event_type": "feat", "summary": "Completing the mirrored simulation sandbox with a CLI controller, a robust data processor for the 130-asset local universe, and a warmup-aware main engine."}
+{"timestamp": "2026-03-20T14:40:22.572987Z", "event_type": "fix", "summary": "Fixing SyntaxError in simulation/main_sim.py."}
+{"timestamp": "2026-03-21T11:53:26.623604Z", "event_type": "fix", "summary": "Adding physics forensics to simulation/main_sim.py to debug zero-trade results."}
+{"timestamp": "2026-03-21T11:54:46.439806Z", "event_type": "fix", "summary": "Restoring the missing execution block in simulation/main_sim.py."}
+{"timestamp": "2026-03-21T11:59:39.843764Z", "event_type": "chore", "summary": "Deleting obsolete files from the root of the simulation directory."}
+{"timestamp": "2026-03-21T12:03:22.068347Z", "event_type": "fix", "summary": "Fixing CLI command registration and internal path imports for the simulation sandbox."}
+{"timestamp": "2026-03-21T12:04:07.323514Z", "event_type": "fix", "summary": "Fixing Typer CLI registration and engine capital overrides."}
+{"timestamp": "2026-03-21T12:05:01.691333Z", "event_type": "fix", "summary": "Fixing Typer CLI to explicitly require and support the 'run' subcommand by adding a routing callback."}
+{"timestamp": "2026-03-21T12:08:25.843107Z", "event_type": "fix", "summary": "Decoupling the simulation sandbox from the live codebase and fixing the Pandas timezone ingestion bug."}
+{"timestamp": "2026-03-21T12:10:44.407761Z", "event_type": "fix", "summary": "Adding comprehensive debug logging, fixing the warmup indicator, and exposing SimBroker execution math to diagnose zero-trade results."}
+{"timestamp": "2026-03-21T12:12:33.615036Z", "event_type": "fix", "summary": "Restoring the live bot's portfolio initialization logic to the simulation engine to fix the empty roster bug."}
+{"timestamp": "2026-03-21T12:13:42.662307Z", "event_type": "fix", "summary": "Fixing the NoneType formatting error in debug logs and reinforcing the Pandas timezone stripping logic."}
+{"timestamp": "2026-03-21T12:19:27.895506Z", "event_type": "feat", "summary": "Upgrading the simulation engine and broker to support fractional shares and aggressive single-slot compounding to match the original test algorithm."}
+{"timestamp": "2026-03-21T12:24:13.816486Z", "event_type": "fix", "summary": "Restoring the pointer-based H1 CSV ingestion logic to fix physics desyncs and setting the CLI default to single-slot compounding."}
+{"timestamp": "2026-03-21T12:26:10.906191Z", "event_type": "fix", "summary": "Decoupling PortfolioManager roster size from SimBroker slot limits to restore dynamic TCA Jump rotations."}
+{"timestamp": "2026-03-21T12:29:29.874766Z", "event_type": "fix", "summary": "Updating the D1 'f_d' daily flux calculation in the data processor to perfectly match the original script's annualized volatility formula."}
+{"timestamp": "2026-03-21T12:32:38.728887Z", "event_type": "feat", "summary": "Adding full universe autodiscovery to the simulation CLI and engine."}
+{"timestamp": "2026-03-21T12:51:07.551643Z", "event_type": "fix", "summary": "Fixing the severed physics coupling in the get_tilt calculation to restore dynamic Manifold stability."}

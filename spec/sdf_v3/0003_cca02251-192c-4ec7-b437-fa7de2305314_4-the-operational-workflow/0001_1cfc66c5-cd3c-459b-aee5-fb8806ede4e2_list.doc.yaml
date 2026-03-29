@@ -1,0 +1,17 @@
+id: 1cfc66c5-cd3c-459b-aee5-fb8806ede4e2
+type: list
+status: draft
+content: '1. **Context Retrieval (CIS):** An agent queries the CIS, which navigates
+  the tree by reading `_topic.manifest.yaml` files to gain efficient context, retrieving
+  specific `.doc.yaml` fragments only when necessary.
+
+  2. **Proposal Generation (Agent):** The agent generates a declarative JSON proposal
+  listing the desired atomic filesystem operations (create, update, delete). For insertions,
+  it MUST use a decimal index.
+
+  3. **Pre-Flight Verification (CIS):** The proposal is sent to the CIS for deterministic
+  validation against SDF rules.
+
+  4. **Integration (Orchestrator):** The validated proposal is sent to the Orchestrator.
+  The Orchestrator executes the filesystem operations and then invokes the `renumber`
+  utility on any modified directories to finalize the change as a single atomic transaction.'

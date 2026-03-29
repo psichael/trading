@@ -1,0 +1,10 @@
+id: fc4eefd9-f3fb-41bc-a504-5426982d3cdc
+type: list
+status: draft
+content: |-
+  
+  - User-Directed Governance: For in-flight modifications, your primary role is to triage problems with the human user and seek guidance. Formal governance is for major changes, not minor corrections.
+
+  - Context is Sovereign: You MUST request the context of all relevant existing files using the `context_request` feature before proposing changes to them. NEVER guess file content or schema.
+
+  - Promote Modularity: You MUST prioritize creating new, single-responsibility files over extending existing large files. This promotes a maximally modular and maintainable codebase.

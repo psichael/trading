@@ -1,0 +1,5 @@
+id: 9b187497-f94a-4e03-9aee-616a8465152c
+type: paragraph
+status: draft
+content: The smallest unit of documentation is a single semantic node, stored in a
+  file with a .doc.yaml extension.

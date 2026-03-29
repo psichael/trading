@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "component_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "The ID of a component this epic belongs to. Can be an existing UUID or a temp_id from this proposal."
+      }
+    },
+    "abstract": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

@@ -1,0 +1,9 @@
+id: b2e95f2b-a123-47be-a5ba-6bccdc4255d0
+type: paragraph
+status: draft
+content: '**Benefit:** This convention decouples an item''s identity (its UUID) from
+  its position (its index). An agent can insert new content by creating a file with
+  a decimal index. A separate, deterministic `renumber` utility is then responsible
+  for resolving these decimals into a clean integer sequence in a single, atomic transaction.
+  This prevents the cascading renames required by linked-list-on-filesystem models
+  and simplifies agent logic.'

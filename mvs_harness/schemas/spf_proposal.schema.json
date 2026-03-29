@@ -1,0 +1,93 @@
+{
+  "description": "Defines the declarative JSON schema used by the Planner Agent to propose changes to the plan knowledge graph.",
+  "type": "object",
+  "properties": {
+    "create": {
+      "type": "object",
+      "properties": {
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "definitions/create_component.schema.json"
+          }
+        },
+        "epics": {
+          "type": "array",
+          "items": {
+            "$ref": "definitions/create_epic.schema.json"
+          }
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "definitions/create_task.schema.json"
+          }
+        },
+        "contracts": {
+          "type": "array",
+          "items": {
+            "$ref": "definitions/create_contract.schema.json"
+          }
+        }
+      }
+    },
+    "update": {
+      "type": "object",
+      "properties": {
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "definitions/update_component.schema.json"
+          }
+        },
+        "epics": {
+          "type": "array",
+          "items": {
+            "$ref": "definitions/update_epic.schema.json"
+          }
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "definitions/update_task.schema.json"
+          }
+        },
+        "contracts": {
+          "type": "array",
+          "items": {
+            "$ref": "definitions/update_contract.schema.json"
+          }
+        }
+      }
+    },
+    "delete": {
+      "type": "object",
+      "properties": {
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "definitions/delete_item.schema.json"
+          }
+        },
+        "epics": {
+          "type": "array",
+          "items": {
+            "$ref": "definitions/delete_item.schema.json"
+          }
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "definitions/delete_item.schema.json"
+          }
+        },
+        "contracts": {
+          "type": "array",
+          "items": {
+            "$ref": "definitions/delete_item.schema.json"
+          }
+        }
+      }
+    }
+  }
+}

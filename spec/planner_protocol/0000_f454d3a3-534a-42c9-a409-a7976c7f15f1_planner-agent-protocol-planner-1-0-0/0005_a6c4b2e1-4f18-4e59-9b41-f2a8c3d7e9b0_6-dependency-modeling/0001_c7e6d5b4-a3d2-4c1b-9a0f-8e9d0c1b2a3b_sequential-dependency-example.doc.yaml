@@ -1,0 +1,29 @@
+id: c7e6d5b4-a3d2-4c1b-9a0f-8e9d0c1b2a3b
+type: code
+status: draft
+content: |-
+  ```json
+  {
+    "create": {
+      "tasks": [
+        {
+          "temp_id": "task1-rename-file",
+          "title": "Rename core module",
+          "parent_epic_id": "existing-epic-123",
+          "implements_contract_id": "refactoring-contract",
+          "component_ids": ["core-component"],
+          "content": "Rename 'old_module.py' to 'new_module.py'."
+        },
+        {
+          "temp_id": "task2-update-imports",
+          "title": "Update imports to new module name",
+          "parent_epic_id": "existing-epic-123",
+          "insert_after_task_id": "task1-rename-file",
+          "implements_contract_id": "refactoring-contract",
+          "component_ids": ["core-component"],
+          "content": "Update all import statements in the codebase that reference 'old_module' to now reference 'new_module'."
+        }
+      ]
+    }
+  }
+  ```

@@ -1,0 +1,326 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SPF Logical Plan Proposal",
+  "description": "Defines the declarative JSON schema used by the Planner Agent to propose changes to the plan knowledge graph.",
+  "type": "object",
+  "properties": {
+    "create": {
+      "type": "object",
+      "properties": {
+        "epics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/create_epic"
+          }
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/create_task"
+          }
+        },
+        "contracts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/create_contract"
+          }
+        }
+      }
+    },
+    "update": {
+      "type": "object",
+      "properties": {
+        "epics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/update_epic"
+          }
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/update_task"
+          }
+        },
+        "contracts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/update_contract"
+          }
+        }
+      }
+    },
+    "delete": {
+      "type": "object",
+      "properties": {
+        "epics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/delete_item"
+          }
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/delete_item"
+          }
+        },
+        "contracts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/delete_item"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "create_epic": {
+      "type": "object",
+      "properties": {
+        "temp_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "insert_after_epic_id": {
+          "type": "string"
+        },
+        "component_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "abstract": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "temp_id",
+        "title",
+        "insert_after_epic_id",
+        "component_ids",
+        "abstract"
+      ]
+    },
+    "create_task": {
+      "type": "object",
+      "properties": {
+        "temp_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "parent_epic_id": {
+          "type": "string"
+        },
+        "insert_after_task_id": {
+          "type": "string"
+        },
+        "component_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "implements_contract_id": {
+          "type": "string"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "source_task_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "source_task_id"
+            ]
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "artifact_path": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "type",
+              "artifact_path"
+            ]
+          }
+        },
+        "content": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "temp_id",
+        "title",
+        "parent_epic_id",
+        "insert_after_task_id",
+        "component_ids",
+        "implements_contract_id",
+        "inputs",
+        "outputs",
+        "content"
+      ]
+    },
+    "create_contract": {
+      "type": "object",
+      "properties": {
+        "temp_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "parent_component_id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "input_schema": {
+          "type": "object"
+        },
+        "output_schema": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "temp_id",
+        "title",
+        "parent_component_id",
+        "version",
+        "input_schema",
+        "output_schema"
+      ]
+    },
+    "update_epic": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "component_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "abstract": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "update_task": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "component_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "implements_contract_id": {
+          "type": "string"
+        },
+        "insert_after_task_id": {
+          "type": "string",
+          "description": "Specifies the new position for the task, making it the one immediately following the task with this ID."
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/create_task/properties/inputs/items"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/create_task/properties/outputs/items"
+          }
+        },
+        "content": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "update_contract": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "input_schema": {
+          "type": "object"
+        },
+        "output_schema": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "delete_item": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  }
+}

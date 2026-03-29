@@ -1,0 +1,5 @@
+id: 87bacb84-845c-4a05-a22c-d7de5b9e9169
+type: paragraph
+status: draft
+content: Defines the schema for a "task," which is an atomic unit of work represented
+  by a standard SDF `.doc.yaml` file with a specific type.

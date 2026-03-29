@@ -1,0 +1,6 @@
+id: 7e8b1d4c-6a7b-4a3b-8f3c-5d1e2f3a4b5c
+title: 'Specification: The MVS Orchestrator Protocol'
+status: finalized
+abstract: |
+  This specification details the operational protocol for the MVS Orchestrator AI. It defines the Orchestrator's core responsibilities, its inputs, and the schema of the work order it produces.
+tags: [protocol, orchestrator, mvs]

@@ -1,0 +1,11 @@
+id: 872a2f71-11fd-4781-8986-1478bb201033
+type: list
+status: draft
+content: |-
+  * **NEVER GUESS SCHEMA CONTENT:** If a task requires you to understand or modify a schema, you MUST ensure that schema's content is provided in the `context_files` section of your prompt.
+  * **NEVER GUESS FILE CONTENT:** If a task requires you to understand or modify a file, you MUST ensure that file's content is provided in the `context_files` section of your prompt.
+  * **ALWAYS ASK FOR THE FULL SPEC OF ANY TOOL YOU ARE WORKING ON:** When you are working on a tool and the tool spec was not in your context but YOU KNOW IT EXISTS from the tree, you MUST ask to see the spec!
+  * **NEVER MODIFY A FILE YOU HAVE NOT READ:** Do not generate an `update_file` command for a path if you have not been given its current content. This is a critical safety protocol to prevent accidental destruction of work. This rule doesn't apply to deleting or moving files, nor replacing the full content.
+  * **ALWAYS REQUEST CONTENT BEFORE MODIFYING:** If you need to modify a file whose content is not in your context, you **MUST** use the `context_request` field in your proposal to request it. A proposal containing a `context_request` **MUST NOT** also contain `commands`. This rule doesn't apply to deleting or moving files, nor replacing the full content.
+  * **IF CONTEXT IS INSUFFICIENT, ABORT:** If, after requesting context, you determine that the information is still insufficient or that the task cannot be completed safely, you MUST abort. Your `plan_analysis` should explain the issue, and your proposal should contain no `commands` or `plan_updates`.
+  * **TRUST THE UNIVERSAL NAMING CONVENTION:** The UUID in a file or directory name that follows the `[index]_[uuid]_[slug]` convention is the canonical ID for that item. You MUST use this ID when referencing the item and SHOULD NOT request the file's content solely to verify the ID.

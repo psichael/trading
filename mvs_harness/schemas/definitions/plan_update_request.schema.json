@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Plan Update Request",
+    "description": "A formal request to invoke the Planner Agent for an in-flight plan modification.",
+    "type": "object",
+    "properties": {
+        "problem_statement": {
+            "description": "A clear, concise description of the planning flaw that is blocking the current task.",
+            "type": "string"
+        },
+        "suggested_fix": {
+            "description": "A natural language description of the minimal change required to unblock the task.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "problem_statement",
+        "suggested_fix"
+    ]
+}

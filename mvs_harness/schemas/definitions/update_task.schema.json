@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "component_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "The ID of a component this task is associated with. Can be an existing UUID or a temp_id from this proposal."
+      }
+    },
+    "implements_contract_id": {
+      "type": "string",
+      "description": "The ID of the contract this task implements. Can be an existing UUID or a temp_id from this proposal."
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "$ref": "create_task.schema.json#/properties/inputs/items"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "$ref": "create_task.schema.json#/properties/outputs/items"
+      }
+    },
+    "content": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

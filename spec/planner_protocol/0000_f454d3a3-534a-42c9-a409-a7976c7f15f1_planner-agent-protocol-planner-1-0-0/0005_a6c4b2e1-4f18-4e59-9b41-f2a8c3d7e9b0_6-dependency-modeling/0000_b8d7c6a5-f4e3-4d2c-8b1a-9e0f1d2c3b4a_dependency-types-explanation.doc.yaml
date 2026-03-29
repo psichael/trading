@@ -1,0 +1,7 @@
+id: b8d7c6a5-f4e3-4d2c-8b1a-9e0f1d2c3b4a
+type: paragraph
+status: draft
+content: |
+  You MUST correctly model the relationship between tasks. There are two types of dependencies, and you MUST use the correct mechanism for each:
+
+  1.  **Sequential Dependency:** Use `insert_after_task_id` when tasks must be executed in a specific order but do not pass a named artifact between them. This is common for operations like "rename file" followed by "update file content".

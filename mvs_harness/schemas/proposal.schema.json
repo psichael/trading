@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://mvs-harness.com/schemas/proposal.schema.json",
+    "title": "MVS Proposal",
+    "description": "A structured proposal from an AI Agent. This is the single entrypoint for all agent-driven actions, which can be either direct filesystem commands (for Implementers) or logical plan updates (for Planners). The 'commands' and 'spf_plan_update' properties are mutually exclusive.",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "plan_analysis": {
+            "description": "A mandatory strategic review of the project plan, assessing validity, soundness, and opportunity.",
+            "type": "string"
+        },
+        "summary": {
+            "description": "A brief, human-readable summary of the proposed changes.",
+            "type": "string"
+        },
+        "event_type": {
+            "description": "The conventional commit type for the event (e.g., 'feat', 'fix', 'chore').",
+            "type": "string"
+        },
+        "commands": {
+            "description": "For Implementer Agents: An ordered list of direct file system operations to be executed. This is mutually exclusive with 'spf_plan_update'.",
+            "type": "array",
+            "items": {
+                "$ref": "definitions/command.schema.json"
+            }
+        },
+        "spf_plan_update": {
+            "description": "For Planner Agents: A declarative, logical update to the project plan knowledge graph. This is mutually exclusive with 'commands'. The harness will route this to the SPF compiler for validation and command generation.",
+            "$ref": "spf_proposal.schema.json"
+        },
+        "completed_task_path": {
+            "description": "Optional: The path to the task file that is completed by this proposal. CRITICAL: If no task is being completed, this key MUST be omitted from the proposal object entirely. DO NOT include it with a null or empty string value.",
+            "type": "string"
+        },
+        "plan_update_request": {
+            "$ref": "definitions/plan_update_request.schema.json"
+        },
+        "context_request": {
+            "description": "Optional: A formal request for additional context files required to complete a task. This is typically used when aborting a task due to missing information.",
+            "$ref": "context_request.schema.json"
+        }
+    },
+    "required": [
+        "plan_analysis",
+        "summary",
+        "event_type"
+    ]
+}

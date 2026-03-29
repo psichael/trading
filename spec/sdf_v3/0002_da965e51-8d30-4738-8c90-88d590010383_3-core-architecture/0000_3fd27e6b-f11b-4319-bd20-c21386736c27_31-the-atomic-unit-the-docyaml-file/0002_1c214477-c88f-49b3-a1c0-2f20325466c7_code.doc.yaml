@@ -1,0 +1,11 @@
+id: 1c214477-c88f-49b3-a1c0-2f20325466c7
+type: code
+status: draft
+content: "```\nid: unique-semantic-uuid             # Required, immutable UUID for\
+  \ cross-referencing.\ntype: paragraph                     # Required. e.g., 'heading-1',\
+  \ 'paragraph', 'list-item-bullet'.\nstatus: finalized                   # Required.\
+  \ e.g., 'draft', 'finalized', 'deprecated'.\ntags: [api, security]             \
+  \  # Optional. Keywords for non-hierarchical discovery.\nreferences:           \
+  \              # Optional. Links to other fragments by their UUIDs.\n  - doc_id:\
+  \ some-other-fragment-uuid\ncontent: |                          # Required. The\
+  \ single, atomic piece of content in Markdown.\n  This is one idea.\n```"

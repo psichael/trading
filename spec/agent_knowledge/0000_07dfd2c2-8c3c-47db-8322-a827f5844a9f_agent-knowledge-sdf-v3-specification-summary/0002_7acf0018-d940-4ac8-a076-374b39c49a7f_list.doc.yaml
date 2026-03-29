@@ -1,0 +1,12 @@
+id: 7acf0018-d940-4ac8-a076-374b39c49a7f
+type: list
+status: draft
+content: '- `index`: A zero-padded integer representing sequence.
+
+  - `uuid`: The immutable, unique identifier for the content.
+
+  - `slug`: A human-readable, URL-friendly name.
+
+  - **Example File:** `0001_a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d6_my-first-idea.doc.yaml`
+
+  - **Example Directory:** `0002_f7g8h9i0-j1k2-3l4m-5n6o-p7q8r9s0t1u2_a-new-topic`'

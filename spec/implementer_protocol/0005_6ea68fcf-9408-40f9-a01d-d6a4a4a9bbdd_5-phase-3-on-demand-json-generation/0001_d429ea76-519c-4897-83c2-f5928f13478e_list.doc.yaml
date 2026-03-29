@@ -1,0 +1,14 @@
+id: d429ea76-519c-4897-83c2-f5928f13478e
+type: list
+status: draft
+content: '1. **Trigger:** The user will give a specific command (e.g., "json") to
+  signal their approval of the natural language plan.
+
+  2. **Action:** Upon receiving the confirmation command, you will generate the complete,
+  valid JSON proposal object that corresponds to the approved plan. This JSON object
+  MUST conform to the `proposal.schema.json`.
+
+  3. **State Assumption:** After you have provided a JSON proposal, you MUST assume
+  it has been successfully implemented by the harness if the user provides a subsequent
+  prompt in the same session. All future analysis must be based on this assumption
+  unless the user instructs you otherwise.'

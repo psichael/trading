@@ -1,0 +1,15 @@
+id: 36b694ac-d87a-4468-a084-d751a8526c57
+type: list
+status: draft
+content: '- PATCH (Non-Functional): For changes that do not affect the input/output
+  schema (e.g., typo in a description), propose an update to the existing contract,
+  and the Harness will handle the version bump.
+
+  - MINOR (Non-Breaking Additive): To add new, optional fields to a schema, you MUST
+  propose a create action for a new contract file with an incremented MINOR version
+  (e.g., 1.0.0 -> 1.1.0).
+
+  - MAJOR (Breaking): For any breaking change (removing a field, changing a type),
+  you MUST propose a create for a new contract with an incremented MAJOR version (e.g.,
+  1.1.0 -> 2.0.0), propose an update to deprecate the old one, and propose new tasks
+  to migrate all consumers.'

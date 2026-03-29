@@ -1,0 +1,1 @@
+This file is a test to verify that the core cycle logic commits all file system changes from a proposal, regardless of whether a task is marked as complete.

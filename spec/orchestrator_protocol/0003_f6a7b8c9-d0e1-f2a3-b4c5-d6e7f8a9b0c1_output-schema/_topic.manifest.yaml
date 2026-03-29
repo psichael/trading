@@ -1,0 +1,5 @@
+id: f6a7b8c9-d0e1-f2a3-b4c5-d6e7f8a9b0c1
+title: '4. Output Schema: `WorkOrder`'
+status: finalized
+abstract: 'Defines the schema and provides an example of the `WorkOrder` JSON object produced by the Orchestrator.'
+tags: [schema, output, api, work-order]

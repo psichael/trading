@@ -1,0 +1,6 @@
+id: e5f6a7b8-c9d0-e1f2-a3b4-c5d6e7f8a9b0
+type: paragraph
+status: finalized
+content: |
+  **CRITICAL RULE: Path and Slug Integrity**
+  When identifying context files or generating any filesystem path, the Orchestrator MUST preserve the integrity of existing slugs and filenames. Path slugs must be generated using the project's canonical `slugify` logic as defined in `mvs_harness/sdf/utils.py`. This logic preserves both hyphens (`-`) and underscores (`_`) in filenames. Path segments must not be altered in a way that would cause a mismatch with the physical filesystem (e.g., by incorrectly replacing hyphens with underscores).

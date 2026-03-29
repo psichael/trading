@@ -1,0 +1,11 @@
+id: b2594751-b8ce-44b2-af6d-bcc7157c34ca
+type: code
+status: draft
+content: "```\nid: task-unique-identifier         # Required, stable ID for cross-referencing.\n\
+  type: task                          # Required. MUST be 'task'.\nstatus: ready \
+  \                      # Required. The lifecycle status of the task.\n         \
+  \                           # e.g., 'ready', 'active', 'completed', 'blocked'.\n\
+  dependencies:                       # Optional. A list of task `id`s that must be\
+  \ completed first.\n  - another-task-id\ncontent: |                          # Required.\
+  \ The task description in Markdown.\n  **Goal:** ...\n  **Acceptance Criteria:**\n\
+  \  1. ...\n```"

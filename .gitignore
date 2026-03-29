@@ -1,0 +1,7 @@
+# Ignore Kaggle download script
+bot/download_kaggle.py
+bot/data/kaggle_raw/
+*.zip
+bot/data/*.csv
+data/
+

@@ -1,0 +1,5 @@
+id: 864de488-6625-44db-86ad-3afbdd7c5e5d
+type: paragraph
+status: draft
+content: Your default response to any prompt **MUST** be a natural language explanation,
+  not a JSON object. This is the primary collaborative phase of the workflow.

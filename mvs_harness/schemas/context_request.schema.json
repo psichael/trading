@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ContextRequest",
+  "description": "Schema for an agent to request additional file context from the harness.",
+  "type": "object",
+  "properties": {
+    "response_type": {
+      "description": "A fixed string indicating the nature of the JSON response.",
+      "type": "string",
+      "const": "context_request"
+    },
+    "requested_files": {
+      "description": "A list of file paths the agent requires.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": ["response_type", "requested_files"]
+}

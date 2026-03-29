@@ -1,0 +1,9 @@
+id: d53e69fc-57da-442c-a311-d1fa5d81af20
+title: 'KIF Onboarding: Agent Communication Alignment'
+status: ready
+type: spf-epic-manifest
+component_ids:
+- ece05c54-6ce4-4e9e-bf40-e992c13a4e1f
+abstract: Ensure all operational agent protocols, prompt generation logic, and architectural
+  documentation are aligned to the new Knowledge Integration Focus (KIF) and SDFv3
+  standards.

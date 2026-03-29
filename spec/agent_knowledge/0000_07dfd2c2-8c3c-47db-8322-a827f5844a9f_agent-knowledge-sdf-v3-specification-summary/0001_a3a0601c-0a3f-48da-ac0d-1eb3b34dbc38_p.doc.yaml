@@ -1,0 +1,5 @@
+id: a3a0601c-0a3f-48da-ac0d-1eb3b34dbc38
+type: paragraph
+status: draft
+content: '**Universal Naming Convention:** All SDF filesystem entries (files and directories)
+  MUST follow the convention: `[index]_[uuid]_[slug]`.'

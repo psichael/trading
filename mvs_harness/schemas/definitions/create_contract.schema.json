@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "temp_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "parent_component_id": {
+      "type": "string",
+      "description": "The ID of the component this contract belongs to. Can be an existing UUID or a temp_id from this proposal."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "abstract": {
+      "type": "string"
+    },
+    "input_schema": {
+      "type": "object"
+    },
+    "output_schema": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "temp_id",
+    "title",
+    "parent_component_id",
+    "version",
+    "abstract"
+  ]
+}

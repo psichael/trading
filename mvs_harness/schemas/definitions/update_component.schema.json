@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "parent_component_id": {
+      "type": "string",
+      "description": "The new parent component ID. Can be an existing UUID or a temp_id from this proposal."
+    },
+    "abstract": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

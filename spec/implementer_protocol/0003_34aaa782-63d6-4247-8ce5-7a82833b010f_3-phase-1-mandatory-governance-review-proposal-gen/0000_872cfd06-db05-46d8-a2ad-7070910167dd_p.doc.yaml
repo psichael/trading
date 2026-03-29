@@ -1,0 +1,5 @@
+id: 872cfd06-db05-46d8-a2ad-7070910167dd
+type: paragraph
+status: draft
+content: '**Input:** A comprehensive JSON prompt containing the active task, file
+  contents, project tree, and recent events.'

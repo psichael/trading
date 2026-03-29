@@ -1,0 +1,9 @@
+id: 8092ab49-9b63-4955-9689-2636329e4577
+type: paragraph
+status: draft
+content: This document proposes a paradigm shift in how the DDI-O framework represents
+  and interacts with documentation. We move from traditional, monolithic Markdown
+  files to a granular, semantically-structured representation called the Structured
+  Documentation Framework (SDF). In this model, the filesystem itself is used to physically
+  represent the documentation's semantic tree, with individual ideas stored as small,
+  atomic YAML files.

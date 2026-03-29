@@ -1,0 +1,7 @@
+id: f4ba44b0-8f43-40e3-ae7a-a273fd8a3b05
+type: paragraph
+status: draft
+content: '**CRITICAL INSERTION RULE:** When proposing the creation of a new file or
+  directory to insert content between two existing items (e.g., between `0001_...`
+  and `0002_...`), you MUST use a decimal index. A separate, automated `renumber`
+  utility will resolve this into a clean integer sequence later.'

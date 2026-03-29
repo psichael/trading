@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "kif-prototype"
+version = "0.1.0"
+description = "Standalone prototype for the Knowledge Integration Framework (KIF)."
+authors = ["MVS Agent <agent@mvs.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+networkx = "^3.2.1"
+pydantic = "^2.7.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

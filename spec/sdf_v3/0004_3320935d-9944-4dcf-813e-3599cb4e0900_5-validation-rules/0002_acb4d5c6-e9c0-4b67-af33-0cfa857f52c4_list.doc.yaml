@@ -1,0 +1,15 @@
+id: acb4d5c6-e9c0-4b67-af33-0cfa857f52c4
+type: list
+status: draft
+content: '- **Structure & Naming:** All files and directories must conform to the
+  `[index]_[uuid]_[slug]` naming convention. Every directory must contain a `_topic.manifest.yaml`
+  file.
+
+  - **UUID Integrity:** All `id` fields within YAML files must be valid UUIDs. UUIDs
+  must be unique across the entire knowledge base.
+
+  - **Content & Abstraction:** Every `.doc.yaml` must contain one indivisible idea.
+  Information must flow from general to specific as one descends the tree.
+
+  - **Manifest Governance:** A manifest `abstract` must accurately summarize its direct
+  children. Its `relations` can only link to other topic UUIDs.'

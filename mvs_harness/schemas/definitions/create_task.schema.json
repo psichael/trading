@@ -1,0 +1,82 @@
+{
+  "type": "object",
+  "properties": {
+    "temp_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "parent_epic_id": {
+      "type": "string",
+      "description": "The ID of the epic this task belongs to. Can be an existing UUID or a temp_id from this proposal."
+    },
+    "insert_after_task_id": {
+      "type": "string",
+      "description": "Optional. The ID of the task after which this one should be inserted. If omitted, it will be placed first in the epic. Can be an existing UUID or a temp_id from this proposal."
+    },
+    "component_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "The ID of a component this task is associated with. Can be an existing UUID or a temp_id from this proposal."
+      }
+    },
+    "implements_contract_id": {
+      "type": "string",
+      "description": "The ID of the contract this task implements. Can be an existing UUID or a temp_id from this proposal."
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "source_task_id": {
+            "type": "string",
+            "description": "The ID of the task that produces this input. Can be an existing UUID or a temp_id from this proposal."
+          }
+        },
+        "required": [
+          "id",
+          "source_task_id"
+        ]
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "artifact_path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "artifact_path"
+        ]
+      }
+    },
+    "content": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "temp_id",
+    "title",
+    "parent_epic_id",
+    "component_ids",
+    "implements_contract_id",
+    "content"
+  ]
+}

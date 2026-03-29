@@ -1,0 +1,6 @@
+id: 3f6fcd5a-a2d7-47bd-bc93-73f7bf781b62
+type: paragraph
+status: draft
+content: 'All filesystem entries (files and directories) follow a universal naming
+  convention that encodes order and identity: `[index]_[uuid]_[slug].[type].yaml`
+  for files, and `[index]_[uuid]_[slug]` for directories.'

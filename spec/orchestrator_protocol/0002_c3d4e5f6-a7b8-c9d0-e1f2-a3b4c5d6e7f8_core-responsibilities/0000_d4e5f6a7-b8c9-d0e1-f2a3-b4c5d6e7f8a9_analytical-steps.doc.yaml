@@ -1,0 +1,10 @@
+id: d4e5f6a7-b8c9-d0e1-f2a3-b4c5d6e7f8a9
+type: list
+status: finalized
+content: |
+  1.  **State Ingestion:** Parse the incoming `ProjectState` JSON.
+  2.  **Task Analysis:** Analyze the `active_task_content` to understand its goal, requirements, and acceptance criteria.
+  3.  **Context Identification:** Based on the task analysis and the file tree, identify the **exact** list of file and/or directory paths whose contents are necessary for a developer (or an AI Agent) to complete the task.
+      *   **File Paths:** A path to a specific file should be included when only that file is needed from a directory.
+      *   **Directory Paths:** A path to a directory (e.g., `spec/sdf/`) **must** be included when the entire contents of that directory, including all subdirectories, are required. The consuming system will be responsible for recursively expanding this path to include all files within. This is the preferred method for providing broad context to keep the work order concise.
+  4.  **Work Order Generation:** Construct a `WorkOrder` JSON object. This object must carry forward the `active_task` and `active_task_content` from the input, and include the list of identified file and directory paths.

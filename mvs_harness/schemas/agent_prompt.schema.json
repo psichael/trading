@@ -1,0 +1,69 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "MVS AgentPrompt",
+    "description": "The complete input payload for the AI Agent, containing the work order and all necessary file context.",
+    "type": "object",
+    "properties": {
+        "work_order": {
+            "description": "The directive from the AI Orchestrator specifying the task and required context.",
+            "type": "object",
+            "properties": {
+                "active_task": {
+                    "description": "The path to the active task file.",
+                    "type": "string"
+                },
+                "task_content": {
+                    "description": "The full content of the active task file.",
+                    "type": "string"
+                },
+                "required_context_files": {
+                    "description": "A list of file paths the Orchestrator determined are necessary to complete the task.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": ["active_task", "task_content", "required_context_files"]
+        },
+        "context_files": {
+            "description": "The full contents of the files requested in the work_order.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                },
+                "required": ["path", "content"]
+            }
+        },
+        "recent_events": {
+            "description": "The last few entries from the event log.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "timestamp": {"type": "string", "format": "date-time"},
+                    "event_type": {"type": "string"},
+                    "summary": {"type": "string"},
+                    "task_file": {"type": "string"}
+                },
+                "required": ["timestamp", "event_type", "summary", "task_file"]
+            }
+        },
+        "file_tree": {
+            "description": "A string representation of the project's file tree.",
+            "type": "string"
+        },
+        "operational_protocol": {
+            "description": "The operational protocol governing the agent's behavior and interaction model.",
+            "type": "string"
+        }
+    },
+    "required": ["work_order", "context_files", "recent_events", "file_tree", "operational_protocol"]
+}

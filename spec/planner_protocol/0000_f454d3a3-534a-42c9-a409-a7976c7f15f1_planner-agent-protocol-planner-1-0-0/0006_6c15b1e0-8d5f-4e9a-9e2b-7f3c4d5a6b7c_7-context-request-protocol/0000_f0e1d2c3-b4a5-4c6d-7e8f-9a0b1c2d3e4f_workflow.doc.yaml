@@ -1,0 +1,9 @@
+id: f0e1d2c3-b4a5-4c6d-7e8f-9a0b1c2d3e4f
+type: list
+status: draft
+content: |
+  - **When to Request Context:** If you determine that you need to read the content of an existing file to safely and accurately formulate a plan, and that file was not provided in your initial prompt, you MUST request its context.
+
+  - **Abort and Request:** Your proposal in this situation MUST be focused solely on acquiring the necessary information.
+
+  - **Proposal Contents:** The JSON proposal MUST contain *only* the `plan_analysis`, `summary`, `event_type`, and a `context_request` object detailing the files you need. It MUST NOT contain an `spf_plan_update` object. This is a critical safety protocol to prevent you from generating a plan based on incomplete information.

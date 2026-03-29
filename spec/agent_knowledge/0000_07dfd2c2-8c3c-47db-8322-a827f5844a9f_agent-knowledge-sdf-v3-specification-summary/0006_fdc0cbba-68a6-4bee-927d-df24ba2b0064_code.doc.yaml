@@ -1,0 +1,8 @@
+id: fdc0cbba-68a6-4bee-927d-df24ba2b0064
+type: code
+status: draft
+content: "```\nid: topic-unique-uuid             # Required. The primary key for this\
+  \ topic.\ntitle: Human-Readable Title        # Required.\nstatus: finalized    \
+  \              # Required. Lifecycle status of the topic.\nabstract: |         \
+  \               # Required. A high-level summary of the topic's intent.\n  This\
+  \ section details...\n```"

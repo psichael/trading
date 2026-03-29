@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "temp_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "insert_after_epic_id": {
+      "type": "string",
+      "description": "Optional. The ID of the epic after which this one should be inserted. If omitted, it will be placed first. Can be an existing UUID or a temp_id from this proposal."
+    },
+    "component_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "The ID of a component this epic belongs to. Can be an existing UUID or a temp_id from this proposal."
+      }
+    },
+    "abstract": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "temp_id",
+    "title",
+    "component_ids",
+    "abstract"
+  ]
+}

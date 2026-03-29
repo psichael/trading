@@ -1,0 +1,19 @@
+id: a7b8c9d0-e1f2-a3b4-c5d6-e7f8a9b0c1d2
+type: paragraph
+status: finalized
+content: |
+  The Orchestrator's output is a JSON object that strictly adheres to the `work_order.schema.json`.
+
+  **Example `WorkOrder.json`:**
+  ```json
+  {
+    "active_task": "plan/22_mvs2_sdf_unification/01_define_unification_plan.md",
+    "task_content": "# Task: Define Unification Plan for MVS2 and SDF...",
+    "required_context_files": [
+      "MVS2_WORKFLOW.md",
+      "mvs_harness/cli.py",
+      "spec/last/",
+      "spec/sdf/"
+    ]
+  }
+  ```
