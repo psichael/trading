@@ -2,6 +2,7 @@ import sys
 import os
 import json
 import typer
+from datetime import datetime
 from typing import Optional
 
 # Ensure project root is in path so 'simulation' module can be resolved
@@ -10,6 +11,12 @@ if root_dir not in sys.path:
     sys.path.append(root_dir)
 
 from simulation.main_sim import run_simulation
+
+# Fallback to hardcoded token if import fails
+try:
+    from live.main_live import TIINGO_TOKEN
+except ImportError:
+    TIINGO_TOKEN = '1e1b9c4ef14bdc6ad07d14b6d5d8563c447ecbe3'
 
 app = typer.Typer()
 
@@ -33,7 +40,8 @@ def run_cmd(
     max_sector_weight: float = typer.Option(0.15, "--max-sector-weight", help="Maximum capital allocation per sector"),
     hedge_quota: float = typer.Option(0.2, "--hedge-quota", help="Percentage of capital reserved for hedging"),
     config: Optional[str] = typer.Option(None, "--config", help="Path to JSON config to load parameters from"),
-    save: Optional[str] = typer.Option(None, "--save", help="Name to save this run's parameters as a JSON config")
+    save: Optional[str] = typer.Option(None, "--save", help="Name to save this run's parameters as a JSON config"),
+    tiingo: bool = typer.Option(False, "--tiingo", help="Use dynamic Tiingo data lake instead of local CSVs")
 ):
     """Execute historical simulation."""
     
@@ -63,6 +71,34 @@ def run_cmd(
                 else:
                     universe.append(sym)
             
+    preloaded_data = None
+    if tiingo:
+        from simulation.data_code.tiingo_adapter import TiingoSimAdapter
+        
+        depth_days = lookback + 40 
+        if start:
+            try:
+                start_dt = datetime.strptime(start, "%Y-%m-%d")
+                days_ago = (datetime.now() - start_dt).days
+                depth_days = max(depth_days, days_ago + lookback + 10)
+            except Exception as e:
+                print(f"⚠️ [WARN] Could not parse start date for depth calculation: {e}")
+        
+        print(f"\n🌐 [SYSTEM] Initializing Tiingo Parity Test (Depth: {depth_days} days)...")
+        
+        active_universe = universe
+        if universe == ["ALL"]:
+            try:
+                from live.main_live import ASSETS
+                active_universe = ASSETS
+            except ImportError:
+                print("❌ [ERROR] Could not resolve 'ALL' for Tiingo. Ensure live.main_live is accessible.")
+                return
+                
+        adapter = TiingoSimAdapter(active_universe, TIINGO_TOKEN)
+        m5_timeline, h1_map, d1_map = adapter.get_simulation_data(depth_days=depth_days)
+        preloaded_data = (m5_timeline, h1_map, d1_map)
+
     results = run_simulation(
         tickers=universe, 
         initial_capital=capital, 
@@ -73,7 +109,8 @@ def run_cmd(
         debug=debug,
         draft_size=draft_size,
         max_sector_weight=max_sector_weight,
-        hedge_quota=hedge_quota
+        hedge_quota=hedge_quota,
+        preloaded_data=preloaded_data
     )
     
     if save and results:

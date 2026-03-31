@@ -1,18 +1,40 @@
 {
     "name": "run5_30d",
-    "reference_days": -23,
-    "reference_pnl": 0.0,
+    "reference_days": 9,
+    "reference_pnl": 2.0777,
     "parameters": {
         "draft_size": 30,
         "max_sector_weight": 0.15,
         "hedge_quota": 0.2,
-        "lookback": 30,
+        "lookback": 60,
         "slots": 1,
-        "capital": 50000.0
+        "capital": 3250.0
     },
     "universe": [
         "DOGE",
         "DOTUSD",
-        "..."
+        "XRP",
+        "AVAX",
+        "DE",
+        "SOXL",
+        "CADJPY",
+        "ORCL",
+        "BYND",
+        "IWM",
+        "LLY",
+        "WMT",
+        "EURCHF",
+        "JPM",
+        "XAGUSD",
+        "USDCAD",
+        "XLB",
+        "USO",
+        "FCX",
+        "GLD",
+        "QQQ",
+        "SPY",
+        "TLT",
+        "VXX",
+        "DIA"
     ]
 }

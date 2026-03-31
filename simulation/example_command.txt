@@ -1,0 +1,10 @@
+python simulation/cli.py run \
+  --tickers "DOGE,DOT,XRP,AVAX,DE,SOXL,CADJPY,ORCL,BYND,IWM,LLY,WMT,EURCHF,JPM,XAGUSD,USDCAD,XLB,USO,FCX,GLD,QQQ,SPY,TLT,VXX,DIA" \
+  --lookback 60 \
+  --draft-size 30 \
+  --max-sector-weight 0.15 \
+  --hedge-quota 0.2 \
+  --capital 3250.0 \
+  --start "2025-12-21" \
+  --end "2026-03-31" \
+  --save "run5_30d"
