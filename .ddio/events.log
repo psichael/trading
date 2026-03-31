@@ -302,3 +302,4 @@
 {"timestamp": "2026-03-31T10:14:59.524915Z", "event_type": "fix", "summary": "Updating PortfolioManager constructor to accept dynamic sweep parameters."}
 {"timestamp": "2026-03-31T10:25:50.874876Z", "event_type": "feat", "summary": "Making Tiingo data ingestion dynamic by adding a configurable `depth_days` parameter to the cache manager and adapter."}
 {"timestamp": "2026-03-31T13:33:56.404404Z", "event_type": "feat", "summary": "Implementing JSON-based configuration matrix across simulator and live bot."}
+{"timestamp": "2026-03-31T13:37:00.731071Z", "event_type": "fix", "summary": "Updating the live PortfolioManager constructor to accept dynamic sweep parameters."}

@@ -1,0 +1,18 @@
+{
+    "name": "run5_30d",
+    "reference_days": -23,
+    "reference_pnl": 0.0,
+    "parameters": {
+        "draft_size": 30,
+        "max_sector_weight": 0.15,
+        "hedge_quota": 0.2,
+        "lookback": 30,
+        "slots": 1,
+        "capital": 50000.0
+    },
+    "universe": [
+        "DOGE",
+        "DOTUSD",
+        "..."
+    ]
+}
