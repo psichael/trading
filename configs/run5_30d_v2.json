@@ -1,0 +1,44 @@
+{
+    "name": "run5_30d_v2",
+    "reference_days": 99,
+    "reference_pnl": 281.1288,
+    "execution_commands": {
+        "simulation": "python simulation/cli_v2.py run --config configs/run5_30d_v2.json --tiingo",
+        "live": "python live/main_live_v2.py --config configs/run5_30d_v2.json"
+    },
+    "parameters": {
+        "draft_size": 30,
+        "max_sector_weight": 0.15,
+        "hedge_quota": 0.2,
+        "lookback": 60,
+        "slots": 1,
+        "capital": 3250.0
+    },
+    "universe": [
+        "dogeusd",
+        "dotusd",
+        "xrpusd",
+        "avaxusd",
+        "DE",
+        "SOXL",
+        "CADJPY",
+        "ORCL",
+        "BYND",
+        "IWM",
+        "LLY",
+        "WMT",
+        "EURCHF",
+        "JPM",
+        "XAGUSD",
+        "USDCAD",
+        "XLB",
+        "USO",
+        "FCX",
+        "GLD",
+        "QQQ",
+        "SPY",
+        "TLT",
+        "VXX",
+        "DIA"
+    ]
+}

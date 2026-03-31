@@ -36,7 +36,13 @@ class PortfolioManager:
         
         new_golden_list = []
         regime_counts = {'Crypto': 0, 'Forex': 0, 'Commodities': 0, 'Defensive_Macro': 0, 'Equities': 0}
-        max_per_regime = int(self.draft_size * self.max_sector_weight)
+        
+        # If weight is 1.0, allow the full draft size for one regime. Otherwise, apply the cap.
+        if self.max_sector_weight >= 1.0:
+            max_per_regime = self.draft_size
+        else:
+            max_per_regime = max(1, int(self.draft_size * self.max_sector_weight))
+            
         hedge_slots = int(self.draft_size * self.hedge_quota)
         
         for t in sorted_tickers:
