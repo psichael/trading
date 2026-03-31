@@ -316,3 +316,4 @@
 {"timestamp": "2026-03-31T15:20:17.291789Z", "event_type": "feat", "summary": "Phase 2: Building the shared V2 data lake and API adapters."}
 {"timestamp": "2026-03-31T15:22:26.983905Z", "event_type": "feat", "summary": "Phase 3: Deploying the unified V2 Orchestrators."}
 {"timestamp": "2026-03-31T15:35:41.162688Z", "event_type": "feat", "summary": "Updating PortfolioManager to support 100% sector concentration for Alpha vs. Risk comparison."}
+{"timestamp": "2026-03-31T18:25:53.063282Z", "event_type": "feat", "summary": "Fixing the tearsheet generation to dynamically name files based on the save flag."}

@@ -1,0 +1,20 @@
+{
+    "name": "comparison_alpha_all_in",
+    "reference_days": 1754,
+    "reference_pnl": 623.3941,
+    "execution_commands": {
+        "simulation": "python simulation/cli_v2.py run --config configs/comparison_alpha_all_in.json --tiingo",
+        "live": "python live/main_live_v2.py --config configs/comparison_alpha_all_in.json"
+    },
+    "parameters": {
+        "draft_size": 30,
+        "max_sector_weight": 1.0,
+        "hedge_quota": 0.2,
+        "lookback": 60,
+        "slots": 1,
+        "capital": 3250.0
+    },
+    "universe": [
+        "ALL"
+    ]
+}

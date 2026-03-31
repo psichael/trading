@@ -17,7 +17,7 @@ from shared.core.math_utils import get_friction
 # Legacy local CSV support remains in simulation
 from simulation.data_code.data_processor import LocalDataIngestor
 
-def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, end=None, debug=True, preloaded_data=None, draft_size=30, max_sector_weight=0.15, hedge_quota=0.2):
+def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, end=None, debug=True, preloaded_data=None, draft_size=30, max_sector_weight=0.15, hedge_quota=0.2, run_name="tearsheet"):
     data_dir = "data" if os.path.exists("data") else "bot/data"
     
     if preloaded_data:
@@ -150,7 +150,10 @@ def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, e
 
     print("\n")
     broker.print_results(m5_timeline.iloc[-1])
-    broker.generate_tearsheet(warmup_end=warmup_end)
+    
+    # Use the dynamic run_name for the PNG output
+    img_name = f"{run_name}.png" if not run_name.endswith('.png') else run_name
+    broker.generate_tearsheet(warmup_end=warmup_end, filename=img_name)
     
     final_val = broker.get_estimated_portfolio_value(m5_timeline.iloc[-1])
     roi_pct = ((final_val - initial_capital) / initial_capital) * 100

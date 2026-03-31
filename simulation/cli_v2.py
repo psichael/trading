@@ -99,6 +99,9 @@ def run_cmd(
         m5_timeline, h1_map, d1_map = adapter.get_simulation_data(depth_days=depth_days)
         preloaded_data = (m5_timeline, h1_map, d1_map)
 
+    # Pass the save string down as the run_name so tearsheets aren't overwritten
+    run_name = save if save else "tearsheet"
+
     results = run_simulation(
         tickers=universe, 
         initial_capital=capital, 
@@ -110,7 +113,8 @@ def run_cmd(
         draft_size=draft_size,
         max_sector_weight=max_sector_weight,
         hedge_quota=hedge_quota,
-        preloaded_data=preloaded_data
+        preloaded_data=preloaded_data,
+        run_name=run_name
     )
     
     if save and results:
