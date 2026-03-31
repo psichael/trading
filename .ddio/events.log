@@ -310,3 +310,4 @@
 {"timestamp": "2026-03-31T14:36:14.103070Z", "event_type": "feat", "summary": "Adding auto-generated execution bash commands to the saved JSON configuration files."}
 {"timestamp": "2026-03-31T14:45:04.770066Z", "event_type": "fix", "summary": "Adding depth_days parameter to the live DataCacheManager to support dynamic JSON configuration limits."}
 {"timestamp": "2026-03-31T14:48:02.662167Z", "event_type": "fix", "summary": "Fixing KeyError in the live bot warmup phase by safely accessing historical row data."}
+{"timestamp": "2026-03-31T14:56:15.186787Z", "event_type": "fix", "summary": "Aligning live bot's data lake depth to match the standalone simulator's 30-day active window."}

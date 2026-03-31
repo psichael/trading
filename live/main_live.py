@@ -126,7 +126,9 @@ async def run_unified_engine(config_data=None):
     with open(telemetry_file, 'w') as f:
         f.write("timestamp,ticker,price,signal,h1_flux,m5_state,m5_rds\n")
     
-    m5_timeline = cache.sync_and_load_history(depth_days=lookback + 30) 
+    # FIXED: Increased depth from +30 to +40 so it perfectly mirrors the 30-day active window 
+    # of the standalone simulator without missing the early days of the month.
+    m5_timeline = cache.sync_and_load_history(depth_days=lookback + 40) 
     sim_broker = SimBroker(VIRTUAL_CAPITAL_USD, MAX_SLOTS)
     warmup_end_time = m5_timeline.index[0] + timedelta(days=lookback + 10) 
     
@@ -162,7 +164,6 @@ async def run_unified_engine(config_data=None):
         if is_h1_close: last_h1_hour = current_time.hour
         
         for ticker in ASSETS:
-            # FIXED: Use .get() to gracefully handle missing Tiingo assets like CADJPY
             price = row.get(ticker)
             if pd.notna(price):
                 is_crypto = 'usd' in ticker.lower()
