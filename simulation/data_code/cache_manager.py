@@ -51,8 +51,8 @@ class DataCacheManager:
         df = df.rename(columns={date_col: 'timestamp', 'close': ticker})
         return df[['timestamp', ticker]].set_index('timestamp')
 
-    def sync_and_load_history(self):
-        print(f"🔍 [SYSTEM] Auditing Data Lake Integrity...")
+    def sync_and_load_history(self, depth_days=120):
+        print(f"🔍 [SYSTEM] Auditing Data Lake Integrity (Depth: {depth_days} days)...")
         
         if os.path.exists(self.history_file):
             master_df = pd.read_csv(self.history_file, index_col=0, parse_dates=True)
@@ -61,7 +61,7 @@ class DataCacheManager:
             master_df = pd.DataFrame()
 
         now = datetime.now()
-        start_threshold = (now - timedelta(days=60)).replace(hour=0, minute=0, second=0, microsecond=0)
+        start_threshold = (now - timedelta(days=depth_days)).replace(hour=0, minute=0, second=0, microsecond=0)
         
         perfect_idx = pd.date_range(start=start_threshold, end=now, freq='5min')
         master_df = master_df.reindex(perfect_idx)
@@ -101,7 +101,7 @@ class DataCacheManager:
             updates_df = pd.concat(all_updates, axis=0).sort_index()
             updates_df = updates_df.groupby(updates_df.index).first()
             master_df = master_df.combine_first(updates_df)
-            master_df = master_df.sort_index().ffill().tail(30000)
+            master_df = master_df.sort_index().ffill().tail(depth_days * 288) # 288 5-min intervals in a day
             master_df.to_csv(self.history_file)
 
         print(f"📊 [PHYSICS] Deriving Daily Context (f_d) - Aligned with Simulation Formula...")

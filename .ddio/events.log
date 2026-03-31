@@ -300,3 +300,4 @@
 {"timestamp": "2026-03-31T09:22:32.826500Z", "event_type": "fix", "summary": "Fixing JSON syntax error and proceeding with Tiingo data integration for simulation parity."}
 {"timestamp": "2026-03-31T10:10:48.993531Z", "event_type": "feat", "summary": "Adapting the Typer CLI and simulation engine to support dynamic draft size, sector weighting, and hedge quota parameters."}
 {"timestamp": "2026-03-31T10:14:59.524915Z", "event_type": "fix", "summary": "Updating PortfolioManager constructor to accept dynamic sweep parameters."}
+{"timestamp": "2026-03-31T10:25:50.874876Z", "event_type": "feat", "summary": "Making Tiingo data ingestion dynamic by adding a configurable `depth_days` parameter to the cache manager and adapter."}

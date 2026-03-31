@@ -7,14 +7,14 @@ class TiingoSimAdapter:
         self.cache = DataCacheManager(tickers, token)
         self.tickers = tickers
 
-    def get_simulation_data(self):
+    def get_simulation_data(self, depth_days=120):
         """
         Fetches Tiingo data and transforms it into the M5, H1, and D1 
         formats required by the simulation engine.
         """
-        print(f"🌐 [TIINGO ADAPTER] Synchronizing Unified Data Lake...")
+        print(f"🌐 [TIINGO ADAPTER] Synchronizing Unified Data Lake (Depth: {depth_days} days)...")
         # 1. Get the Master M5 Timeline (The 'Matter')
-        m5_master = self.cache.sync_and_load_history()
+        m5_master = self.cache.sync_and_load_history(depth_days=depth_days)
         
         h1_map = {}
         d1_map = {}
