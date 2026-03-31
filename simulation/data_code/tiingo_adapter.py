@@ -21,6 +21,11 @@ class TiingoSimAdapter:
 
         print(f"📊 [TIINGO ADAPTER] Resampling Physics Manifolds (H1/D1)...")
         for t in self.tickers:
+            # Defensive check: skip assets that 404'd or failed to download
+            if t not in m5_master.columns:
+                print(f"⚠️ [WARN] {t} is missing from the Data Lake. Skipping manifold generation.")
+                continue
+                
             # 2. Derive H1 Physics Map from M5 to ensure 100% alignment
             df_h1 = m5_master[[t]].resample('1h').last().dropna()
             df_h1 = df_h1.reset_index().rename(columns={'index': 'time', t: 'close'})

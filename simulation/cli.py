@@ -66,8 +66,9 @@ def run_cmd(
         else:
             for t in tickers.split(","):
                 sym = t.strip().upper()
-                if sym in ['BTC', 'ETH', 'SOL', 'ADA', 'DOT']:
-                    universe.append(f"{sym}USD")
+                # Extended mapping to handle crypto pairs seamlessly for Tiingo
+                if sym in ['BTC', 'ETH', 'SOL', 'ADA', 'DOT', 'DOGE', 'AVAX', 'XRP']:
+                    universe.append(f"{sym.lower()}usd")
                 else:
                     universe.append(sym)
             
