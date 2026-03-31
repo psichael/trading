@@ -126,6 +126,10 @@ def run_cmd(
             "name": save,
             "reference_days": results["active_days"],
             "reference_pnl": round(results["roi"], 4),
+            "execution_commands": {
+                "simulation": f"python simulation/cli.py run --config configs/{filename} --tiingo",
+                "live": f"python live/main_live.py --config configs/{filename}"
+            },
             "parameters": {
                 "draft_size": draft_size,
                 "max_sector_weight": max_sector_weight,
