@@ -33,14 +33,14 @@ def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, e
             
             if not tickers:
                 print("❌ No valid assets found in data directory.")
-                return
+                return None
 
         ingestor = LocalDataIngestor(data_dir=data_dir)
         m5_timeline, h1_map, d1_map = ingestor.load_aligned_data(tickers, start, end)
     
     if m5_timeline.empty:
         print("❌ No data found for the given criteria.")
-        return
+        return None
 
     broker = SimBroker(initial_capital, slots)
     portfolio = PortfolioManager(
@@ -148,3 +148,14 @@ def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, e
     print("\n")
     broker.print_results(m5_timeline.iloc[-1])
     broker.generate_tearsheet(warmup_end=warmup_end)
+    
+    # Calculate metrics for config saving
+    final_val = broker.get_estimated_portfolio_value(m5_timeline.iloc[-1])
+    roi_pct = ((final_val - initial_capital) / initial_capital) * 100
+    active_days = (m5_timeline.index[-1] - warmup_end).days
+    
+    return {
+        "roi": roi_pct,
+        "active_days": active_days,
+        "final_capital": final_val
+    }

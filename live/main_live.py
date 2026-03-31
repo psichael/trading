@@ -4,6 +4,8 @@ import time
 import asyncio
 import signal
 import pytz
+import json
+import argparse
 import pandas as pd
 from datetime import datetime, timedelta
 
@@ -17,8 +19,8 @@ from live.execution.broker_sim import SimBroker
 from live.execution.broker_ibkr import IBKRBroker
 from live.core.math_utils import get_friction
 
-# === CONFIG ===
-TIINGO_TOKEN = '1e1b9c4ef14bdc6ad07d14b6d5d8563c447ecbe3' 
+# === DEFAULT CONFIG (Overridden by JSON) ===
+TIINGO_TOKEN = '1e1b9c4ef14bdc6ad07d14b6d5d8563c447ecbe3'
 VIRTUAL_CAPITAL_USD = 3250.00
 MAX_SLOTS = 1
 ALLOCATION_PER_SLOT = VIRTUAL_CAPITAL_USD / MAX_SLOTS
@@ -75,20 +77,58 @@ def log_telemetry(file_path, timestamp, ticker, price, signal, forge):
     with open(file_path, 'a') as f:
         f.write(f"{timestamp},{ticker},{price},{signal},{state.get('H1_Flux',0)},{state.get('M5_Flux',0)},{state.get('M5_Rds',0)}\n")
 
-async def run_unified_engine():
+async def run_unified_engine(config_data=None):
+    global ASSETS, VIRTUAL_CAPITAL_USD, MAX_SLOTS, ALLOCATION_PER_SLOT
+    
+    # Default parameters
+    draft_size = 30
+    lookback = 60
+    max_sector_weight = 0.15
+    hedge_quota = 0.20
+    
+    # Unpack JSON Config if provided
+    if config_data:
+        print(f"\n[SYSTEM] Injecting physics constraints from JSON matrix: {config_data.get('name', 'Custom')}")
+        if "universe" in config_data:
+            ASSETS = config_data["universe"]
+        
+        params = config_data.get("parameters", {})
+        if "capital" in params: VIRTUAL_CAPITAL_USD = params["capital"]
+        if "slots" in params: MAX_SLOTS = params["slots"]
+        if "draft_size" in params: draft_size = params["draft_size"]
+        if "lookback" in params: lookback = params["lookback"]
+        if "max_sector_weight" in params: max_sector_weight = params["max_sector_weight"]
+        if "hedge_quota" in params: hedge_quota = params["hedge_quota"]
+        
+        ALLOCATION_PER_SLOT = VIRTUAL_CAPITAL_USD / MAX_SLOTS
+
     print("\n=== INITIALIZING UNIFIED GATED FORGE ORCHESTRATOR ===")
+    print(f"Universe Size:   {len(ASSETS)} Assets")
+    print(f"Draft Size:      {draft_size} Assets")
+    print(f"Max Sector Wgt:  {max_sector_weight}")
+    print(f"Hedge Quota:     {hedge_quota}")
+    print(f"Capital / Slots: ${VIRTUAL_CAPITAL_USD} / {MAX_SLOTS}")
     
     cache = DataCacheManager(ASSETS, TIINGO_TOKEN)
-    portfolio = PortfolioManager(ASSETS, active_roster_size=5)
+    
+    # Inject params into PortfolioManager
+    portfolio = PortfolioManager(
+        ASSETS, 
+        MAX_SLOTS,
+        lookback_days=lookback,
+        draft_size=draft_size,
+        max_sector_weight=max_sector_weight,
+        hedge_quota=hedge_quota
+    )
     forges = {ticker: LiveGatedForge(ticker) for ticker in ASSETS}
     
     telemetry_file = os.path.join(cache.data_dir, 'telemetry.csv')
     with open(telemetry_file, 'w') as f:
         f.write("timestamp,ticker,price,signal,h1_flux,m5_state,m5_rds\n")
     
-    m5_timeline = cache.sync_and_load_history()
+    m5_timeline = cache.sync_and_load_history(depth_days=lookback + 30) 
     sim_broker = SimBroker(VIRTUAL_CAPITAL_USD, MAX_SLOTS)
-    warmup_end_time = m5_timeline.index[0] + timedelta(days=30) 
+    warmup_end_time = m5_timeline.index[0] + timedelta(days=lookback + 10) 
     
     last_h1_hour = -1
     last_quarter_week = -1
@@ -114,9 +154,9 @@ async def run_unified_engine():
         if not portfolio.golden_list or (current_week % 13 == 0 and current_week != last_quarter_week):
             portfolio.rebuild_golden_list(current_time, cache.daily_master)
             last_quarter_week = current_week
-        if not portfolio.active_roster or current_week != last_week:
+        if not portfolio.active_roster or current_week != last_draft_week:
             portfolio.rebuild_active_roster(current_time, cache.daily_master)
-            last_week = current_week
+            last_draft_week = current_week
 
         is_h1_close = current_time.hour != last_h1_hour
         if is_h1_close: last_h1_hour = current_time.hour
@@ -137,7 +177,6 @@ async def run_unified_engine():
         active_roster = portfolio.active_roster
         recently_overridden = set()
 
-        # Simulation Exit Logic (Aliged with Best Candidate Logic)
         for ticker in list(held_tickers):
             is_roster_drop = ticker not in active_roster
             sig = forges[ticker].get_signal()
@@ -151,7 +190,6 @@ async def run_unified_engine():
                 force_exit = True
                 reason = "Signal WAIT"
             else:
-                # Check for 1.5x Override like simulation/main_sim.py
                 cands = [c for c in active_roster if forges[c].get_signal() == 'LONG' and c != ticker and c not in held_tickers]
                 if cands:
                     best_alt = max(cands, key=lambda x: forges[x].state.get('H1_Flux', 0) * (1 - (get_friction(x) * 10)))
@@ -170,9 +208,7 @@ async def run_unified_engine():
                     pnl_pct = ((price - entry_p) / entry_p * 100) if entry_p > 0 else 0.0
                     print(f"    [SIM SELL] {ticker:<5} | PnL: {pnl_pct:>+6.2f}% | Reason: {reason:<14} | Exit Flux: {forges[ticker].state.get('H1_Flux', 0):.2f}")
 
-        # Simulation Entry Logic (Best Candidate Selection Aligned with main_sim.py)
         if len(held_tickers) < MAX_SLOTS:
-            # Filter out assets that were just overridden to prevent churn loop
             cands = [t for t in active_roster if forges[t].get_signal() == 'LONG' and t not in held_tickers and t not in recently_overridden]
             if cands:
                 best_asset = max(cands, key=lambda x: forges[x].state.get('H1_Flux', 0) * (1 - (get_friction(x) * 10)))
@@ -231,7 +267,6 @@ async def run_unified_engine():
                 if ticker not in active_roster or portfolio.check_exit_condition(ticker, held_tickers, forges):
                     price = current_prices.get(ticker, 0)
                     if price > 0:
-                        # Track if this was an override swap to prevent churn loop
                         if ticker in active_roster and forges[ticker].get_signal() != 'WAIT':
                             recently_overridden.add(ticker)
                             
@@ -256,6 +291,15 @@ async def run_unified_engine():
         if hasattr(live_broker, 'ib') and live_broker.ib.isConnected(): live_broker.ib.disconnect()
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Live Bot Orchestrator")
+    parser.add_argument("--config", type=str, help="Path to JSON configuration file")
+    args = parser.parse_args()
+    
+    config_matrix = None
+    if args.config and os.path.exists(args.config):
+        with open(args.config, 'r') as f:
+            config_matrix = json.load(f)
+    
     if sys.platform == 'win32': asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    try: asyncio.run(run_unified_engine())
+    try: asyncio.run(run_unified_engine(config_data=config_matrix))
     except KeyboardInterrupt: pass
