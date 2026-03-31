@@ -308,3 +308,4 @@
 {"timestamp": "2026-03-31T14:14:31.961298Z", "event_type": "fix", "summary": "Fixing friction deduction bug in the BUY execution logic of SimBroker."}
 {"timestamp": "2026-03-31T14:34:05.250251Z", "event_type": "fix", "summary": "Fixing the missing price valuation bug in SimBroker that caused -100% ROI drops."}
 {"timestamp": "2026-03-31T14:36:14.103070Z", "event_type": "feat", "summary": "Adding auto-generated execution bash commands to the saved JSON configuration files."}
+{"timestamp": "2026-03-31T14:45:04.770066Z", "event_type": "fix", "summary": "Adding depth_days parameter to the live DataCacheManager to support dynamic JSON configuration limits."}

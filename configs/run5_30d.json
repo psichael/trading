@@ -1,7 +1,11 @@
 {
     "name": "run5_30d",
-    "reference_days": 31,
-    "reference_pnl": -100.0,
+    "reference_days": 30,
+    "reference_pnl": 52.4002,
+    "execution_commands": {
+        "simulation": "python simulation/cli.py run --config configs/run5_30d.json --tiingo",
+        "live": "python live/main_live.py --config configs/run5_30d.json"
+    },
     "parameters": {
         "draft_size": 30,
         "max_sector_weight": 0.15,
