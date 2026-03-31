@@ -1,7 +1,7 @@
 {
     "name": "run5_30d",
-    "reference_days": 9,
-    "reference_pnl": 2.0777,
+    "reference_days": 99,
+    "reference_pnl": 409.517,
     "parameters": {
         "draft_size": 30,
         "max_sector_weight": 0.15,
@@ -11,10 +11,10 @@
         "capital": 3250.0
     },
     "universe": [
-        "DOGE",
-        "DOTUSD",
-        "XRP",
-        "AVAX",
+        "dogeusd",
+        "dotusd",
+        "xrpusd",
+        "avaxusd",
         "DE",
         "SOXL",
         "CADJPY",

@@ -43,10 +43,16 @@ class SimBroker:
             usable_capital = self.allocation_per_slot * (1 - fric)
             shares = usable_capital / price
             
-            if shares > 0 and self.cash >= (shares * price):
+            actual_cost = shares * price
+            total_deduction = actual_cost / (1 - fric) # Deduct cost + the broker fee
+            
+            # Use a tiny epsilon to prevent float math rejection on full-cash deployments
+            if shares > 0 and self.cash >= (total_deduction - 1e-6):
                 self.positions[ticker] = shares
-                cost = shares * price
-                self.cash -= cost
+                self.cash -= total_deduction
+                if self.cash < 0: 
+                    self.cash = 0.0 # Prevent -0.000001 balances
+                    
                 self.trade_count += 1
                 self.history.append(f"BUY {shares:.4f} {ticker} @ ${price:.2f} | Fee: {(fric*100):.2f}%")
                 return True

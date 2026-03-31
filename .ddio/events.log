@@ -305,3 +305,4 @@
 {"timestamp": "2026-03-31T13:37:00.731071Z", "event_type": "fix", "summary": "Updating the live PortfolioManager constructor to accept dynamic sweep parameters."}
 {"timestamp": "2026-03-31T13:41:25.723958Z", "event_type": "feat", "summary": "Updating simulation/cli.py to support the --tiingo flag for dynamic data ingestion."}
 {"timestamp": "2026-03-31T13:45:59.319909Z", "event_type": "fix", "summary": "Adding defensive manifold generation and mapping sweep crypto tickers to Tiingo formats."}
+{"timestamp": "2026-03-31T14:14:31.961298Z", "event_type": "fix", "summary": "Fixing friction deduction bug in the BUY execution logic of SimBroker."}
