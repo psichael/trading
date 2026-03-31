@@ -162,8 +162,9 @@ async def run_unified_engine(config_data=None):
         if is_h1_close: last_h1_hour = current_time.hour
         
         for ticker in ASSETS:
-            price = row[ticker]
-            if not pd.isna(price):
+            # FIXED: Use .get() to gracefully handle missing Tiingo assets like CADJPY
+            price = row.get(ticker)
+            if pd.notna(price):
                 is_crypto = 'usd' in ticker.lower()
                 if not is_crypto and not market_open_now:
                     pass
