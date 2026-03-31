@@ -7,10 +7,12 @@ def get_friction(ticker):
     if ticker in ['BTCUSD', 'ETHUSD', 'BTCUSDT', 'ETHUSDT', 'BTC', 'ETH']:
         return 0.0015
         
+    # Prioritize altcoin friction before checking for USD currency strings
     elif any(crypto in ticker for crypto in ['SOL', 'ADA', 'DOGE', 'XRP', 'AVAX', 'MATIC', 'LINK', 'BNB', 'LTC', 'BCH', 'UNI', 'DOT', 'FIL', 'ETC']):
         return 0.0025
         
-    elif any(fx in ticker for fx in ['USD', 'EUR', 'GBP', 'JPY', 'CHF', 'CAD', 'AUD']):
+    # Only apply forex friction if it's a pure forex pair (length exactly 6, no crypto base)
+    elif len(ticker) == 6 and any(fx in ticker for fx in ['USD', 'EUR', 'GBP', 'JPY', 'CHF', 'CAD', 'AUD']):
         return 0.0002
         
     else:
@@ -28,7 +30,7 @@ def get_regime(ticker):
     if any(crypto in ticker for crypto in ['BTC', 'ETH', 'SOL', 'ADA', 'DOGE', 'XRP', 'AVAX', 'MATIC', 'LINK', 'BNB', 'LTC', 'BCH', 'UNI', 'DOT', 'FIL', 'ETC']):
         return 'Crypto'
         
-    elif any(fx in ticker for fx in ['USD', 'EUR', 'GBP', 'JPY', 'CHF', 'CAD', 'AUD']):
+    elif len(ticker) == 6 and any(fx in ticker for fx in ['USD', 'EUR', 'GBP', 'JPY', 'CHF', 'CAD', 'AUD']):
         return 'Forex'
         
     # Commodity Proxies (Miners & Producers)
