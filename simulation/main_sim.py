@@ -14,26 +14,29 @@ from simulation.execution.broker_sim import SimBroker
 from simulation.data_code.data_processor import LocalDataIngestor
 from simulation.core.math_utils import get_friction
 
-def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, end=None, debug=True):
+def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, end=None, debug=True, preloaded_data=None):
     data_dir = "data" if os.path.exists("data") else "bot/data"
     
-    if tickers == ["ALL"]:
-        print(f"\n[DISCOVERY] Scanning '{data_dir}/' for complete asset universe...")
-        m5_files = glob.glob(f"{data_dir}/*_M5_sync_AI.csv")
-        valid_tickers = []
-        for f in m5_files:
-            t = os.path.basename(f).replace('_M5_sync_AI.csv', '')
-            if os.path.exists(f"{data_dir}/{t}_H1_sync_AI.csv") and os.path.exists(f"{data_dir}/{t}_D1_sync_AI.csv"):
-                valid_tickers.append(t)
-        tickers = sorted(valid_tickers)
-        print(f"[DISCOVERY] Found {len(tickers)} valid assets with full Manifold data.")
-        
-        if not tickers:
-            print("❌ No valid assets found in data directory.")
-            return
+    if preloaded_data:
+        m5_timeline, h1_map, d1_map = preloaded_data
+    else:
+        if tickers == ["ALL"]:
+            print(f"\n[DISCOVERY] Scanning '{data_dir}/' for complete asset universe...")
+            m5_files = glob.glob(f"{data_dir}/*_M5_sync_AI.csv")
+            valid_tickers = []
+            for f in m5_files:
+                t = os.path.basename(f).replace('_M5_sync_AI.csv', '')
+                if os.path.exists(f"{data_dir}/{t}_H1_sync_AI.csv") and os.path.exists(f"{data_dir}/{t}_D1_sync_AI.csv"):
+                    valid_tickers.append(t)
+            tickers = sorted(valid_tickers)
+            print(f"[DISCOVERY] Found {len(tickers)} valid assets with full Manifold data.")
+            
+            if not tickers:
+                print("❌ No valid assets found in data directory.")
+                return
 
-    ingestor = LocalDataIngestor(data_dir=data_dir)
-    m5_timeline, h1_map, d1_map = ingestor.load_aligned_data(tickers, start, end)
+        ingestor = LocalDataIngestor(data_dir=data_dir)
+        m5_timeline, h1_map, d1_map = ingestor.load_aligned_data(tickers, start, end)
     
     if m5_timeline.empty:
         print("❌ No data found for the given criteria.")
