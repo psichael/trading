@@ -2,15 +2,15 @@ import pandas as pd
 from simulation.core.math_utils import get_friction, get_regime
 
 class PortfolioManager:
-    def __init__(self, assets, max_slots, lookback_days=30):
+    def __init__(self, assets, max_slots, lookback_days=30, draft_size=30, max_sector_weight=0.15, hedge_quota=0.20):
         self.assets = assets
         self.max_slots = max_slots
         self.roster_size = 5
         self.golden_list = []
         self.active_roster = []
-        self.draft_size = 30
-        self.max_sector_weight = 0.15
-        self.hedge_quota = 0.20
+        self.draft_size = draft_size
+        self.max_sector_weight = max_sector_weight
+        self.hedge_quota = hedge_quota
         self.lookback_days = lookback_days
 
     def rebuild_golden_list(self, current_time, daily_master):
@@ -41,9 +41,9 @@ class PortfolioManager:
         for t in sorted_tickers:
             if len(new_golden_list) >= (self.draft_size - hedge_slots): break
             reg = get_regime(t)
-            if regime_counts[reg] < max_per_regime:
+            if regime_counts.get(reg, 0) < max_per_regime:
                 new_golden_list.append(t)
-                regime_counts[reg] += 1
+                regime_counts[reg] = regime_counts.get(reg, 0) + 1
                 
         if hedge_slots > 0:
             defensive_candidates = [t for t in sorted_tickers if get_regime(t) == 'Defensive_Macro' and t not in new_golden_list]
