@@ -298,3 +298,4 @@
 {"timestamp": "2026-03-29T10:52:16.857830Z", "event_type": "feat", "summary": "Update live bot for fractional shares, single-slot compounding, and decoupled roster sizing."}
 {"timestamp": "2026-03-29T11:05:51.896480Z", "event_type": "fix", "summary": "Synchronize Live bot logic with Simulation DNA to prevent churn and align volatility math."}
 {"timestamp": "2026-03-31T09:22:32.826500Z", "event_type": "fix", "summary": "Fixing JSON syntax error and proceeding with Tiingo data integration for simulation parity."}
+{"timestamp": "2026-03-31T10:10:48.993531Z", "event_type": "feat", "summary": "Adapting the Typer CLI and simulation engine to support dynamic draft size, sector weighting, and hedge quota parameters."}

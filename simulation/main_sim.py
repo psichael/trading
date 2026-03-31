@@ -14,7 +14,7 @@ from simulation.execution.broker_sim import SimBroker
 from simulation.data_code.data_processor import LocalDataIngestor
 from simulation.core.math_utils import get_friction
 
-def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, end=None, debug=True, preloaded_data=None):
+def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, end=None, debug=True, preloaded_data=None, draft_size=30, max_sector_weight=0.15, hedge_quota=0.2):
     data_dir = "data" if os.path.exists("data") else "bot/data"
     
     if preloaded_data:
@@ -43,7 +43,14 @@ def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, e
         return
 
     broker = SimBroker(initial_capital, slots)
-    portfolio = PortfolioManager(tickers, slots, lookback_days=lookback)
+    portfolio = PortfolioManager(
+        tickers, 
+        slots, 
+        lookback_days=lookback, 
+        draft_size=draft_size, 
+        max_sector_weight=max_sector_weight, 
+        hedge_quota=hedge_quota
+    )
     forges = {t: LiveGatedForge(t) for t in tickers}
 
     h1_ptrs = {t: 0 for t in tickers}
@@ -55,6 +62,9 @@ def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, e
     print(f"Initial Capital: ${initial_capital:,.2f} | Slots: {slots}")
     print(f"Universe Size:   {len(tickers)} Assets")
     print(f"Lookback Window: {lookback} Days")
+    print(f"Draft Size:      {draft_size} Assets")
+    print(f"Max Sector Wgt:  {max_sector_weight}")
+    print(f"Hedge Quota:     {hedge_quota}")
     print(f"Data Points:     {len(m5_timeline)} ticks")
     print(f"Start Date:      {sim_start}")
     print(f"Warmup Ends:     {warmup_end}")
