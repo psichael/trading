@@ -1,7 +1,7 @@
 {
     "name": "run5_30d",
-    "reference_days": 99,
-    "reference_pnl": 409.517,
+    "reference_days": 31,
+    "reference_pnl": -100.0,
     "parameters": {
         "draft_size": 30,
         "max_sector_weight": 0.15,

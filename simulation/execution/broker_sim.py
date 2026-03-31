@@ -27,9 +27,20 @@ class SimBroker:
 
     def get_estimated_portfolio_value(self, current_row):
         value = self.cash
+        missing_price = False
+        
         for ticker, shares in self.positions.items():
-            if shares > 0 and not pd.isna(current_row.get(ticker)):
-                value += shares * current_row[ticker]
+            if shares > 0:
+                price = current_row.get(ticker)
+                if pd.notna(price) and price > 0:
+                    value += shares * price
+                else:
+                    missing_price = True
+                    
+        # Fallback to the last known equity if a data gap occurs
+        if missing_price and self.equity_log:
+            return self.equity_log[-1]['equity']
+            
         return value
 
     def record_equity(self, current_time, current_row):
@@ -70,11 +81,8 @@ class SimBroker:
         return False
 
     def print_results(self, final_prices):
-        final_portfolio_value = self.cash
-        
-        for ticker, shares in self.positions.items():
-            if shares > 0 and ticker in final_prices and not pd.isna(final_prices[ticker]):
-                final_portfolio_value += shares * final_prices[ticker]
+        # Centralized logic ensures missing prices don't cause CLI output bugs
+        final_portfolio_value = self.get_estimated_portfolio_value(final_prices)
                 
         roi = ((final_portfolio_value / self.initial_capital) - 1) * 100
         
