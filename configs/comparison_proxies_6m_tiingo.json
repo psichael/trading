@@ -1,0 +1,44 @@
+{
+    "name": "comparison_proxies_6m_tiingo",
+    "reference_days": 183,
+    "reference_pnl": 691.1832,
+    "execution_commands": {
+        "simulation": "python simulation/cli_v2.py run --config configs/comparison_proxies_6m_tiingo.json --tiingo",
+        "live": "python live/main_live_v2.py --config configs/comparison_proxies_6m_tiingo.json"
+    },
+    "parameters": {
+        "draft_size": 30,
+        "max_sector_weight": 0.15,
+        "hedge_quota": 0.2,
+        "lookback": 60,
+        "slots": 1,
+        "capital": 3250.0
+    },
+    "universe": [
+        "MSTR",
+        "COIN",
+        "MARA",
+        "RIOT",
+        "CLSK",
+        "IBIT",
+        "BITO",
+        "ETHE",
+        "SOXL",
+        "VXX",
+        "NVDA",
+        "TSLA",
+        "ORCL",
+        "SPY",
+        "QQQ",
+        "IWM",
+        "GLD",
+        "TLT",
+        "JPM",
+        "WMT",
+        "LLY",
+        "FCX",
+        "DE",
+        "AAPL",
+        "MSFT"
+    ]
+}

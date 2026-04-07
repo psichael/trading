@@ -58,6 +58,8 @@ def run_cmd(
             if "lookback" in params: lookback = params["lookback"]
             if "slots" in params: slots = params["slots"]
             if "capital" in params: capital = params["capital"]
+            if "start" in params: start = params["start"]
+            if "end" in params: end = params["end"]
 
     if not universe:
         if tickers.strip().upper() == "ALL":
@@ -138,7 +140,9 @@ def run_cmd(
                 "hedge_quota": hedge_quota,
                 "lookback": lookback,
                 "slots": slots,
-                "capital": capital
+                "capital": capital,
+                "start": start,
+                "end": end
             },
             "universe": universe
         }
