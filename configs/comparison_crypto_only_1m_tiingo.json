@@ -1,0 +1,28 @@
+{
+    "name": "comparison_crypto_only_1m_tiingo",
+    "reference_days": 31,
+    "reference_pnl": 0.0,
+    "execution_commands": {
+        "simulation": "python simulation/cli_v2.py run --config configs/comparison_crypto_only_1m_tiingo.json --tiingo"
+    },
+    "parameters": {
+        "draft_size": 30,
+        "max_sector_weight": 1.0,
+        "hedge_quota": 0.0,
+        "lookback": 60,
+        "slots": 1,
+        "capital": 3250.0,
+        "start": "2026-03-06",
+        "end": "2026-04-06"
+    },
+    "universe": [
+        "dogeusd",
+        "dotusd",
+        "xrpusd",
+        "avaxusd",
+        "btcusd",
+        "ethusd",
+        "solusd",
+        "adausd"
+    ]
+}

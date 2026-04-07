@@ -1,0 +1,23 @@
+{
+    "name": "comparison_alpaca_only_6m_apr_tiingo",
+    "reference_days": 183,
+    "reference_pnl": 0.0,
+    "execution_commands": {
+        "simulation": "python simulation/cli_v2.py run --config configs/comparison_alpaca_only_6m_apr_tiingo.json --tiingo"
+    },
+    "parameters": {
+        "draft_size": 30,
+        "max_sector_weight": 0.15,
+        "hedge_quota": 0.2,
+        "lookback": 60,
+        "slots": 1,
+        "capital": 3250.0,
+        "start": "2025-10-06",
+        "end": "2026-04-07"
+    },
+    "universe": [
+        "DE", "SOXL", "ORCL", "BYND", "IWM", "LLY", 
+        "WMT", "JPM", "XLB", "USO", "FCX", "GLD", 
+        "QQQ", "SPY", "TLT", "VXX", "DIA"
+    ]
+}
