@@ -16,6 +16,10 @@ class SimBroker:
         self.trade_count = 0
         self.equity_log = []
         
+        # --- Trade Ledger Tracking ---
+        self.active_trades = {}
+        self.closed_trades = []
+        
     @property
     def allocation_per_slot(self):
         if self.max_slots == 1:
@@ -43,7 +47,7 @@ class SimBroker:
         val = self.get_estimated_portfolio_value(current_row)
         self.equity_log.append({'time': current_time, 'equity': val})
 
-    def execute(self, ticker, action, price):
+    def execute(self, ticker, action, price, current_time=None):
         fric = get_friction(ticker)
         if action == 'BUY':
             usable_capital = self.allocation_per_slot * (1 - fric)
@@ -57,6 +61,16 @@ class SimBroker:
                 if self.cash < 0: self.cash = 0.0
                 self.trade_count += 1
                 self.history.append(f"BUY {shares:.4f} {ticker} @ ${price:.2f} | Fee: {(fric*100):.2f}%")
+                
+                # Track Active Trade
+                self.active_trades[ticker] = {
+                    'Ticker': ticker,
+                    'Entry_Time': current_time,
+                    'Entry_Price': price,
+                    'Shares': shares,
+                    'Total_Cost': total_deduction,
+                    'Friction_Entry': fric
+                }
                 return True
             return False
                 
@@ -68,6 +82,26 @@ class SimBroker:
                 self.positions[ticker] = 0
                 self.trade_count += 1
                 self.history.append(f"SELL {shares:.4f} {ticker} @ ${price:.2f} | Fee: {(fric*100):.2f}%")
+                
+                # Close the trade and calculate metrics
+                if ticker in self.active_trades:
+                    trade = self.active_trades.pop(ticker)
+                    trade['Exit_Time'] = current_time
+                    trade['Exit_Price'] = price
+                    trade['Total_Revenue'] = revenue
+                    trade['Friction_Exit'] = fric
+                    
+                    raw_pnl = trade['Total_Revenue'] - trade['Total_Cost']
+                    trade['PnL'] = raw_pnl
+                    trade['ROI_%'] = (raw_pnl / trade['Total_Cost']) * 100 if trade['Total_Cost'] > 0 else 0
+                    
+                    if current_time and trade['Entry_Time']:
+                        trade['Duration'] = str(current_time - trade['Entry_Time'])
+                    else:
+                        trade['Duration'] = "Unknown"
+                        
+                    self.closed_trades.append(trade)
+                    
                 return True
         return False
 
@@ -103,3 +137,14 @@ class SimBroker:
         plt.savefig(filename, dpi=300)
         print(f"📊 Tearsheet successfully rendered to: {filename}\n")
         plt.close()
+
+    def export_trade_ledger(self, filename="trade_ledger.csv"):
+        if not self.closed_trades:
+            print("📝 [LEDGER] No closed trades to export.")
+            return
+        
+        df = pd.DataFrame(self.closed_trades)
+        cols = ['Ticker', 'Entry_Time', 'Exit_Time', 'Duration', 'Entry_Price', 'Exit_Price', 'Shares', 'Total_Cost', 'Total_Revenue', 'PnL', 'ROI_%', 'Friction_Entry', 'Friction_Exit']
+        df = df[[c for c in cols if c in df.columns]]
+        df.to_csv(filename, index=False)
+        print(f"📝 [LEDGER] Exported {len(self.closed_trades)} trades to {filename}")

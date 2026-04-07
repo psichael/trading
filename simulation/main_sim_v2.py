@@ -132,7 +132,7 @@ def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, e
                 if force_exit:
                     safe_price = row.get(t, 0.0) if not pd.isna(row.get(t)) else 0.0
                     if safe_price > 0:
-                        broker.execute(t, 'SELL', safe_price)
+                        broker.execute(t, 'SELL', safe_price, current_time)
             
             held = broker.get_holdings()
             if len(held) < slots:
@@ -141,7 +141,7 @@ def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, e
                     best_asset = max(cands, key=lambda x: forges[x].state.get('H1_Flux', 0) * (1 - (get_friction(x) * 10)))
                     price = row.get(best_asset)
                     if pd.notna(price) and price > 0:
-                        broker.execute(best_asset, 'BUY', price)
+                        broker.execute(best_asset, 'BUY', price, current_time)
                         
         else:
             if last_warmup_print != current_time.date():
@@ -154,6 +154,10 @@ def run_simulation(tickers, initial_capital, slots=1, lookback=30, start=None, e
     # Use the dynamic run_name for the PNG output
     img_name = f"{run_name}.png" if not run_name.endswith('.png') else run_name
     broker.generate_tearsheet(warmup_end=warmup_end, filename=img_name)
+    
+    # Export the new trade ledger
+    ledger_name = f"{run_name}_ledger.csv" if run_name != "tearsheet" else "trade_ledger.csv"
+    broker.export_trade_ledger(filename=ledger_name)
     
     final_val = broker.get_estimated_portfolio_value(m5_timeline.iloc[-1])
     roi_pct = ((final_val - initial_capital) / initial_capital) * 100

@@ -318,3 +318,4 @@
 {"timestamp": "2026-03-31T15:35:41.162688Z", "event_type": "feat", "summary": "Updating PortfolioManager to support 100% sector concentration for Alpha vs. Risk comparison."}
 {"timestamp": "2026-03-31T18:25:53.063282Z", "event_type": "feat", "summary": "Fixing the tearsheet generation to dynamically name files based on the save flag."}
 {"timestamp": "2026-04-07T09:37:15.145545Z", "event_type": "fix", "summary": "Fixing date parameter bug in simulation CLI and restoring missing time window to crypto configuration."}
+{"timestamp": "2026-04-07T10:05:54.447989Z", "event_type": "feat", "summary": "Implementing forensic trade ledger export in the simulation engine to track individual trade performance."}
