@@ -81,6 +81,7 @@ async def run_unified_engine(config_data=None):
     lookback = 60
     max_sector_weight = 0.15
     hedge_quota = 0.20
+    config_start_str = None
     
     if config_data:
         print(f'\n[SYSTEM] Injecting physics constraints from JSON matrix: {config_data.get("name", "Custom")}')
@@ -94,6 +95,7 @@ async def run_unified_engine(config_data=None):
         if 'lookback' in params: lookback = params['lookback']
         if 'max_sector_weight' in params: max_sector_weight = params['max_sector_weight']
         if 'hedge_quota' in params: hedge_quota = params['hedge_quota']
+        if 'start' in params: config_start_str = params['start']
         
         ALLOCATION_PER_SLOT = VIRTUAL_CAPITAL_USD / MAX_SLOTS
 
@@ -120,7 +122,14 @@ async def run_unified_engine(config_data=None):
     with open(telemetry_file, 'w') as f:
         f.write('timestamp,ticker,price,signal,h1_flux,m5_state,m5_rds\n')
     
-    m5_timeline = cache.sync_and_load_history(depth_days=lookback + 40) 
+    if config_start_str:
+        start_dt = datetime.strptime(config_start_str, "%Y-%m-%d")
+        active_days = max(0, (datetime.now() - start_dt).days)
+        calculated_depth = lookback + active_days + 10
+    else:
+        calculated_depth = lookback + 40
+
+    m5_timeline = cache.sync_and_load_history(depth_days=calculated_depth) 
     sim_broker = SimBroker(VIRTUAL_CAPITAL_USD, MAX_SLOTS)
     warmup_end_time = m5_timeline.index[0] + timedelta(days=lookback + 10) 
     
@@ -191,7 +200,7 @@ async def run_unified_engine(config_data=None):
 
             if force_exit:
                 price = row.get(ticker, 0)
-                if await sim_broker.execute(ticker, 'SELL', price):
+                if sim_broker.execute(ticker, 'SELL', price):
                     held_tickers.remove(ticker)
                     entry_p = sim_entry_prices.get(ticker, price)
                     pnl_pct = ((price - entry_p) / entry_p * 100) if entry_p > 0 else 0.0
@@ -203,7 +212,7 @@ async def run_unified_engine(config_data=None):
                 best_asset = max(cands, key=lambda x: forges[x].state.get('H1_Flux', 0) * (1 - (get_friction(x) * 10)))
                 price = row.get(best_asset)
                 if pd.notna(price) and price > 0:
-                    if await sim_broker.execute(best_asset, 'BUY', price):
+                    if sim_broker.execute(best_asset, 'BUY', price):
                         held_tickers.append(best_asset)
                         sim_entry_prices[best_asset] = price
                         state = forges[best_asset].state

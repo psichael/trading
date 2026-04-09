@@ -201,7 +201,7 @@ async def run_unified_engine(config_data=None):
 
             if force_exit:
                 price = row.get(ticker, 0)
-                if await sim_broker.execute(ticker, 'SELL', price):
+                if sim_broker.execute(ticker, 'SELL', price):
                     held_tickers.remove(ticker)
                     entry_p = sim_entry_prices.get(ticker, price)
                     pnl_pct = ((price - entry_p) / entry_p * 100) if entry_p > 0 else 0.0
@@ -213,7 +213,7 @@ async def run_unified_engine(config_data=None):
                 best_asset = max(cands, key=lambda x: forges[x].state.get('H1_Flux', 0) * (1 - (get_friction(x) * 10)))
                 price = row.get(best_asset)
                 if pd.notna(price) and price > 0:
-                    if await sim_broker.execute(best_asset, 'BUY', price):
+                    if sim_broker.execute(best_asset, 'BUY', price):
                         held_tickers.append(best_asset)
                         sim_entry_prices[best_asset] = price
                         state = forges[best_asset].state
