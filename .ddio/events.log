@@ -319,3 +319,4 @@
 {"timestamp": "2026-03-31T18:25:53.063282Z", "event_type": "feat", "summary": "Fixing the tearsheet generation to dynamically name files based on the save flag."}
 {"timestamp": "2026-04-07T09:37:15.145545Z", "event_type": "fix", "summary": "Fixing date parameter bug in simulation CLI and restoring missing time window to crypto configuration."}
 {"timestamp": "2026-04-07T10:05:54.447989Z", "event_type": "feat", "summary": "Implementing forensic trade ledger export in the simulation engine to track individual trade performance."}
+{"timestamp": "2026-04-09T09:48:13.257499Z", "event_type": "fix", "summary": "Fixing the schema key from 'action' to 'command' to apply the live bot data synchronization updates."}

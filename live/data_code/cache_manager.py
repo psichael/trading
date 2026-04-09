@@ -13,27 +13,28 @@ class DataCacheManager:
         os.makedirs(self.data_dir, exist_ok=True)
         self.history_file = os.path.join(self.data_dir, 'history.csv')
         self.daily_master = pd.DataFrame()
+        self.last_known_prices = {}
 
     def fetch_with_feedback(self, url, params, ticker):
         try:
             response = requests.get(url, params=params)
             if response.status_code == 429:
-                print(f"⚠️ [TIINGO LIMIT] Rate limit hit for {ticker}. Check Power Tier usage.")
+                print(f'⚠️ [TIINGO LIMIT] Rate limit hit for {ticker}. Check Power Tier usage.')
                 return None
             if response.status_code == 403:
-                print(f"🚫 [TIINGO AUTH] 403 Forbidden for {ticker}. Check IEX Entitlements.")
+                print(f'🚫 [TIINGO AUTH] 403 Forbidden for {ticker}. Check IEX Entitlements.')
                 return None
             if response.status_code != 200:
-                print(f"❌ [TIINGO ERR] {ticker} {response.status_code}: {response.text[:100]}")
+                print(f'❌ [TIINGO ERR] {ticker} {response.status_code}: {response.text[:100]}')
                 return None
             return response.json()
         except Exception as e:
-            print(f"❌ [CONN ERR] Could not reach Tiingo for {ticker}: {e}")
+            print(f'❌ [CONN ERR] Could not reach Tiingo for {ticker}: {e}')
             return None
 
     def fetch_surgical_slice(self, ticker, start_date, end_date=None):
         is_crypto = any(x in ticker.lower() for x in ['usd', 'btc', 'eth', 'sol', 'ada', 'dot', 'doge', 'avax'])
-        url = f"https://api.tiingo.com/tiingo/crypto/prices" if is_crypto else f"https://api.tiingo.com/iex/{ticker}/prices"
+        url = f'https://api.tiingo.com/tiingo/crypto/prices' if is_crypto else f'https://api.tiingo.com/iex/{ticker}/prices'
         
         params = {'startDate': start_date, 'resampleFreq': '5min', 'token': self.token}
         if end_date: params['endDate'] = end_date
@@ -52,7 +53,7 @@ class DataCacheManager:
         return df[['timestamp', ticker]].set_index('timestamp')
 
     def sync_and_load_history(self, depth_days=60):
-        print(f"🔍 [SYSTEM] Auditing Data Lake Integrity (Depth: {depth_days} days)...")
+        print(f'🔍 [SYSTEM] Auditing Data Lake Integrity (Depth: {depth_days} days)...')
         
         if os.path.exists(self.history_file):
             master_df = pd.read_csv(self.history_file, index_col=0, parse_dates=True)
@@ -74,7 +75,7 @@ class DataCacheManager:
             missing_times = series.index[series.isna()]
 
             if missing_times.empty:
-                print(f"✅ {ticker} is 100% healthy.")
+                print(f'✅ {ticker} is 100% healthy.')
                 continue
 
             gaps = []
@@ -88,7 +89,7 @@ class DataCacheManager:
             for g_start, g_end in gaps:
                 if (g_end - g_start).total_seconds() < 900: continue
                 
-                print(f"🩹 [HEAL] {ticker}: {g_start.strftime('%m-%d %H:%M')} -> {g_end.strftime('%m-%d %H:%M')}")
+                print(f'🩹 [HEAL] {ticker}: {g_start.strftime("%m-%d %H:%M")} -> {g_end.strftime("%m-%d %H:%M")}')
                 slice_df = self.fetch_surgical_slice(ticker, g_start.strftime('%Y-%m-%d %H:%M:%S'), g_end.strftime('%Y-%m-%d %H:%M:%S'))
                 
                 if not slice_df.empty:
@@ -97,17 +98,16 @@ class DataCacheManager:
                 time.sleep(0.1)
 
         if all_updates:
-            print(f"🧵 [STITCH] Merging {len(all_updates)} pulses into Data Lake...")
+            print(f'🧵 [STITCH] Merging {len(all_updates)} pulses into Data Lake...')
             updates_df = pd.concat(all_updates, axis=0).sort_index()
             updates_df = updates_df.groupby(updates_df.index).first()
             master_df = master_df.combine_first(updates_df)
-            master_df = master_df.sort_index().ffill().tail(depth_days * 288) # 288 5-min intervals in a day
+            master_df = master_df.sort_index().ffill().tail(depth_days * 288)
             master_df.to_csv(self.history_file)
 
-        print(f"📊 [PHYSICS] Deriving Daily Context (f_d) - Aligned with Simulation Formula...")
+        print(f'📊 [PHYSICS] Deriving Daily Context (f_d) - Aligned with Simulation Formula...')
         daily_prices = master_df.resample('D').last().dropna(how='all')
         
-        # Aligned with simulation/data_code/data_processor.py math
         daily_returns = daily_prices.pct_change()
         v_d1 = daily_returns.rolling(24).std() * 100 * np.sqrt(252)
         f_d = (v_d1 / 2.0) * 4.2525
@@ -116,7 +116,7 @@ class DataCacheManager:
         daily_flux.columns = ['date', 'ticker', 'f_d']
         self.daily_master = daily_flux.set_index(['ticker', 'date']).sort_index()
         
-        print(f"✅ [LAKE READY] {len(master_df)} intervals synced ({total_downloaded} new intervals downloaded).")
+        print(f'✅ [LAKE READY] {len(master_df)} intervals synced ({total_downloaded} new intervals downloaded).')
         return master_df
 
     def fetch_live_tick(self):
@@ -125,8 +125,9 @@ class DataCacheManager:
         if crypto_list:
             for i in range(0, len(crypto_list), 5):
                 chunk = crypto_list[i:i+5]
-                url = f"https://api.tiingo.com/tiingo/crypto/prices?tickers={','.join(chunk)}&token={self.token}"
-                data = self.fetch_with_feedback(url, {}, f"CryptoBatch-{i//5}")
+                jchar = ','
+                url = f'https://api.tiingo.com/tiingo/crypto/prices?tickers={jchar.join(chunk)}&token={self.token}'
+                data = self.fetch_with_feedback(url, {}, f'CryptoBatch-{i//5}')
                 if isinstance(data, list):
                     for item in data:
                         t, pd_list = item.get('ticker'), item.get('priceData')
@@ -135,8 +136,17 @@ class DataCacheManager:
         
         for ticker in self.assets:
             if ticker not in results:
-                url = f"https://api.tiingo.com/iex/{ticker}?token={self.token}"
+                url = f'https://api.tiingo.com/iex/{ticker}?token={self.token}'
                 data = self.fetch_with_feedback(url, {}, ticker)
+                
+                current_price = None
                 if isinstance(data, list) and len(data) > 0:
-                    results[ticker] = data[0].get('tngoLast') or data[0].get('last')
+                    current_price = data[0].get('tngoLast') or data[0].get('last')
+                
+                if current_price is not None:
+                    results[ticker] = current_price
+                    self.last_known_prices[ticker] = current_price
+                elif ticker in self.last_known_prices:
+                    results[ticker] = self.last_known_prices[ticker]
+                    
         return results
