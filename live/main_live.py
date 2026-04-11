@@ -125,13 +125,17 @@ async def run_unified_engine(config_data=None):
     if config_start_str:
         start_dt = datetime.strptime(config_start_str, "%Y-%m-%d")
         active_days = max(0, (datetime.now() - start_dt).days)
-        calculated_depth = lookback + active_days + 10
+        calculated_depth = int(lookback * 1.5) + active_days + 10
+        warmup_end_time = start_dt
     else:
         calculated_depth = lookback + 40
+        warmup_end_time = None
 
-    m5_timeline = cache.sync_and_load_history(depth_days=calculated_depth) 
+    m5_timeline = cache.sync_and_load_history(depth_days=calculated_depth)
+    if not warmup_end_time:
+        warmup_end_time = m5_timeline.index[0] + timedelta(days=lookback + 10)
+        
     sim_broker = SimBroker(VIRTUAL_CAPITAL_USD, MAX_SLOTS)
-    warmup_end_time = m5_timeline.index[0] + timedelta(days=lookback + 10) 
     
     last_h1_hour = -1
     last_quarter_week = -1
@@ -139,6 +143,16 @@ async def run_unified_engine(config_data=None):
     last_print_day = -1
     
     sim_entry_prices = {} 
+    
+    print('\n[PHASE 1.5] Constructing Aligned H1 Map...')
+    h1_map = {}
+    for ticker in ASSETS:
+        if ticker in m5_timeline.columns:
+            t_series = m5_timeline[ticker].dropna()
+            t_h1 = t_series.resample('1H', label='right', closed='right').last().dropna()
+            h1_map[ticker] = t_h1.reset_index().rename(columns={'index': 'time', ticker: 'close'})
+            
+    h1_ptrs = {t: 0 for t in ASSETS}
     
     print('\n[PHASE 1/2] Simulating + Hydrating Telemetry...')
     
@@ -160,13 +174,15 @@ async def run_unified_engine(config_data=None):
             portfolio.rebuild_active_roster(current_time, cache.daily_master)
             last_draft_week = current_week
 
-        is_h1_close = current_time.hour != last_h1_hour
-        if is_h1_close: last_h1_hour = current_time.hour
-        
         for ticker in ASSETS:
+            h1_df = h1_map.get(ticker)
+            if h1_df is not None:
+                while h1_ptrs[ticker] < len(h1_df) and h1_df.at[h1_ptrs[ticker], 'time'] <= current_time:
+                    forges[ticker].ingest_h1(h1_df.at[h1_ptrs[ticker], 'close'])
+                    h1_ptrs[ticker] += 1
+                    
             price = row.get(ticker)
-            if pd.notna(price):
-                if is_h1_close: forges[ticker].ingest_h1(price)
+            if pd.notna(price) and price > 0:
                 forges[ticker].ingest_m5(price)
 
         if current_time <= warmup_end_time: continue
@@ -248,7 +264,8 @@ async def run_unified_engine(config_data=None):
             print(f'\n=== ⚡ LIVE TICK: {current_time.strftime("%H:%M:%S")} ===')
             print(f'📦 Holdings: {held_tickers if held_tickers else "NONE"} | 🎯 Roster: {active_roster}')
 
-            is_h1_close = current_time.hour != last_h1_hour
+            # Strict Top of Hour check for exact H1 parity
+            is_h1_close = (current_time.minute < 5) and (current_time.hour != last_h1_hour)
             if is_h1_close: last_h1_hour = current_time.hour
             
             for ticker, price in current_prices.items():

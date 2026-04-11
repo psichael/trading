@@ -52,6 +52,24 @@ class DataCacheManager:
         df = df.rename(columns={date_col: 'timestamp', 'close': ticker})
         return df[['timestamp', ticker]].set_index('timestamp')
 
+    def fetch_daily_history(self, ticker, start_date):
+        is_crypto = any(x in ticker.lower() for x in ['usd', 'btc', 'eth', 'sol', 'ada', 'dot', 'doge', 'avax'])
+        if is_crypto:
+            url = f'https://api.tiingo.com/tiingo/crypto/prices?tickers={ticker}&startDate={start_date}&resampleFreq=1day&token={self.token}'
+        else:
+            url = f'https://api.tiingo.com/tiingo/daily/{ticker}/prices?startDate={start_date}&token={self.token}'
+        
+        data = self.fetch_with_feedback(url, {}, ticker)
+        if not data: return pd.DataFrame()
+        
+        raw_data = data[0]['priceData'] if is_crypto else data
+        if not raw_data: return pd.DataFrame()
+        
+        df = pd.DataFrame(raw_data)
+        date_col = 'date'
+        df[date_col] = pd.to_datetime(df[date_col]).dt.tz_localize(None)
+        return df[[date_col, 'close']].rename(columns={date_col: 'timestamp', 'close': ticker}).set_index('timestamp')
+
     def sync_and_load_history(self, depth_days=60):
         print(f'🔍 [SYSTEM] Auditing Data Lake Integrity (Depth: {depth_days} days)...')
         
@@ -105,16 +123,26 @@ class DataCacheManager:
             master_df = master_df.sort_index().ffill().tail(depth_days * 288)
             master_df.to_csv(self.history_file)
 
-        print(f'📊 [PHYSICS] Deriving Daily Context (f_d) - Aligned with Simulation Formula...')
-        daily_prices = master_df.resample('D').last().dropna(how='all')
+        print(f'📊 [PHYSICS] Fetching Official EOD Data for f_d calculation...')
+        d1_start = (datetime.now() - timedelta(days=depth_days)).strftime('%Y-%m-%d')
+        daily_dfs = []
         
-        daily_returns = daily_prices.pct_change()
-        v_d1 = daily_returns.rolling(24).std() * 100 * np.sqrt(252)
-        f_d = (v_d1 / 2.0) * 4.2525
-        
-        daily_flux = f_d.fillna(0).stack().reset_index()
-        daily_flux.columns = ['date', 'ticker', 'f_d']
-        self.daily_master = daily_flux.set_index(['ticker', 'date']).sort_index()
+        for ticker in self.assets:
+            df_d1 = self.fetch_daily_history(ticker, d1_start)
+            if not df_d1.empty:
+                daily_dfs.append(df_d1)
+            time.sleep(0.1)
+            
+        if daily_dfs:
+            daily_prices = pd.concat(daily_dfs, axis=1).sort_index().ffill()
+            daily_returns = daily_prices.pct_change()
+            v_d1 = daily_returns.rolling(24).std() * 100 * np.sqrt(252)
+            f_d = (v_d1 / 2.0) * 4.2525
+            daily_flux = f_d.fillna(0).stack().reset_index()
+            daily_flux.columns = ['date', 'ticker', 'f_d']
+            self.daily_master = daily_flux.set_index(['ticker', 'date']).sort_index()
+        else:
+            self.daily_master = pd.DataFrame()
         
         print(f'✅ [LAKE READY] {len(master_df)} intervals synced ({total_downloaded} new intervals downloaded).')
         return master_df
